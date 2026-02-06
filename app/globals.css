@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #C01D65;
+  --color-mente: #273DA0;
+  --color-cuerpo: #FB4C00;
+  --color-espiritu: #9B18B9;
+  --color-paper: #FDFCF8;
+  --color-ink: #1C1917;
+  --color-muted: #78716C;
+  --font-sans: Inter, sans-serif;
+  --font-serif: Lora, serif;
+}
+
+@layer base {
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+  }
+
+  h1, h2, h3 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .text-micro {
+    @apply text-xs uppercase tracking-wider font-medium;
+  }
+}
