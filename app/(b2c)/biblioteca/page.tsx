@@ -1,0 +1,132 @@
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Biblioteca | Archivo de Conciencia',
+  description: 'Artículos sobre consciencia, coherencia y bienestar.',
+};
+
+interface Article {
+  slug: string;
+  title: string;
+  date: string;
+  excerpt: string;
+  category: string;
+  readTime: string;
+}
+
+function getArticles(): Article[] {
+  const contentDir = path.join(process.cwd(), 'content', 'biblioteca');
+  
+  if (!fs.existsSync(contentDir)) {
+    return [];
+  }
+  
+  const files = fs.readdirSync(contentDir).filter(file => file.endsWith('.md'));
+  
+  const articles = files.map((filename) => {
+    const slug = filename.replace('.md', '');
+    const filePath = path.join(contentDir, filename);
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    const { data } = matter(fileContent);
+    
+    return {
+      slug,
+      title: data.title || 'Sin título',
+      date: data.date || '',
+      excerpt: data.excerpt || '',
+      category: data.category || 'General',
+      readTime: data.readTime || '5 min',
+    };
+  });
+  
+  // Ordenar por fecha descendente
+  return articles.sort((a, b) => 
+    new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+}
+
+export default function BibliotecaPage() {
+  const articles = getArticles();
+  
+  return (
+    <main className="min-h-screen bg-paper">
+      {/* Header */}
+      <header className="pt-24 pb-12 px-4 md:px-8 max-w-5xl mx-auto">
+        <span className="text-micro text-primary block mb-4 tracking-widest uppercase">
+          Archivo de Conciencia
+        </span>
+        <h1 className="font-serif text-4xl md:text-5xl text-ink mb-4">
+          Biblioteca
+        </h1>
+        <p className="text-muted text-lg font-sans max-w-2xl">
+          Reflexiones, herramientas y recursos para tu camino hacia una vida consciente y coherente.
+        </p>
+      </header>
+
+      {/* Grid de artículos */}
+      <section className="px-4 md:px-8 pb-24 max-w-5xl mx-auto">
+        {articles.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-muted font-sans">No hay artículos disponibles aún.</p>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-6">
+            {articles.map((article) => (
+              <Link
+                key={article.slug}
+                href={`/biblioteca/${article.slug}`}
+                className="group block p-6 border border-ink/10 rounded-2xl hover:border-primary hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 bg-white"
+              >
+                {/* Categoría y tiempo */}
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
+                    {article.category}
+                  </span>
+                  <span className="text-xs text-muted/60">
+                    {article.readTime}
+                  </span>
+                </div>
+                
+                {/* Título */}
+                <h2 className="font-serif text-xl text-ink mb-3 group-hover:text-primary transition-colors">
+                  {article.title}
+                </h2>
+                
+                {/* Extracto */}
+                <p className="text-sm text-muted font-sans leading-relaxed mb-4 line-clamp-3">
+                  {article.excerpt}
+                </p>
+                
+                {/* Fecha */}
+                <time className="text-xs text-muted/50">
+                  {new Date(article.date).toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
+              </Link>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Botón volver */}
+      <div className="px-4 md:px-8 pb-12 max-w-5xl mx-auto">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-muted hover:text-primary transition-colors font-sans text-sm"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Volver al inicio
+        </Link>
+      </div>
+    </main>
+  );
+}

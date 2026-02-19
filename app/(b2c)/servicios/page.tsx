@@ -10,7 +10,7 @@ export default function ServiciosPage() {
           Servicios
         </h1>
         <p className="text-lg md:text-xl text-muted max-w-2xl mx-auto font-sans">
-          Acompañamiento para tu transformación
+          Soberanía Consciente para tu transformación
         </p>
       </section>
 
@@ -79,12 +79,12 @@ export default function ServiciosPage() {
                 Mentoring Individual
               </h2>
               <p className="text-primary font-medium mb-6">
-                Para quienes buscan verdad, no consuelo
+                Para quienes buscan verdad, no consuelo pasivo
               </p>
               <p className="text-ink/70 text-lg leading-relaxed mb-8">
-                Sesiones de clarificación profunda donde vamos a la raíz. 
+                Sesiones de Orden Mental donde vamos a la raíz. 
                 Limpieza del disco duro emocional, recuperación de autonomía 
-                y herramientas concretas.
+                y herramientas concretas basadas en Arquitectura de Comportamiento.
               </p>
 
               {/* Features List */}
@@ -143,9 +143,9 @@ export default function ServiciosPage() {
           </h2>
 
           <p className="text-ink/70 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
-            Enfoque en autoconocimiento y clarificación, no adivinación 
+            Enfoque en autoconocimiento y clarificación, no predicción 
             sin antecedentes. Una herramienta para ordenar lo que parece caos 
-            y encontrar claridad en tu camino.
+            y encontrar claridad en tu camino mediante el espejo del inconsciente.
           </p>
 
           <Link
@@ -157,6 +157,63 @@ export default function ServiciosPage() {
             Consultar disponibilidad
             <ArrowRight className="w-4 h-4" />
           </Link>
+        </div>
+      </section>
+
+      {/* Cualificación Comercial (BRAND-002) */}
+      <section className="py-16 px-4 md:px-8 bg-stone-100 border-y border-stone-200">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 md:p-10 border border-stone-200 shadow-sm">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-ink/5 flex items-center justify-center mt-1">
+                <svg className="w-5 h-5 text-ink/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-serif text-xl text-ink mb-4">
+                  Para quién NO es esto
+                </h3>
+                <p className="text-ink/70 leading-relaxed">
+                  Este espacio no es para quienes buscan soluciones pasivas o respuestas mágicas; se requiere Responsabilidad Radical.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 4 - Agenda / Reservas (Cal.com Embed) */}
+      <section className="py-20 px-4 md:px-8 bg-paper border-t border-ink/10">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <span className="text-micro text-primary block mb-4 tracking-widest uppercase">
+              Reservas
+            </span>
+            <h2 className="font-serif text-3xl md:text-4xl text-ink mb-4">
+              Agenda tu sesión
+            </h2>
+            <p className="text-muted max-w-xl mx-auto">
+              Selecciona el día y horario que mejor te funcione. Recibirás confirmación inmediata.
+            </p>
+          </div>
+
+          {/* Contenedor Cal.com - Aislado para no afectar Tailwind 4 */}
+          <div 
+            id="agenda-container" 
+            className="min-h-[700px] bg-white rounded-2xl border border-ink/10 shadow-sm overflow-hidden"
+          >
+            <iframe 
+              src="https://cal.com/paola-rioseco/intro" 
+              className="w-full h-[700px] border-0"
+              title="Agendar sesión con Paola Rioseco"
+              allow="camera; microphone; autoplay; encrypted-media;"
+            />
+          </div>
+          
+          <p className="text-xs text-muted/60 text-center mt-4">
+            Al reservar, aceptas nuestra política de cancelación con 24 horas de anticipación.
+          </p>
         </div>
       </section>
     </div>

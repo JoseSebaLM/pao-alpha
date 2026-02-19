@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Lora } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -31,7 +30,6 @@ export default function RootLayout({
       >
         <Header />
         <main className="pt-20">{children}</main>
-        <Footer />
       </body>
     </html>
   );

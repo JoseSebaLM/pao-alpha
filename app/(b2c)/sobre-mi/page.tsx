@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
-import { Heart, Eye, Handshake, MessageCircle, ArrowRight } from "lucide-react";
+import { Heart, Eye, Handshake, MessageCircle } from "lucide-react";
+import ContactSection from "@/components/b2c/ContactSection";
 
 const valores = [
   {
@@ -62,21 +62,13 @@ export default function SobreMiPage() {
                 Paola Rioseco
               </h2>
 
-              <div className="space-y-4 text-ink/70 text-lg leading-relaxed">
+              <div className="space-y-5 text-ink/80 text-lg leading-relaxed">
                 <p>
-                  Soy una persona natural, no me siento especial. Prefiero conectar 
-                  desde la naturalidad, con simpleza y cercanía. Mi don es la 
-                  percepción: entiendo el real origen del conflicto.
+                  Soy Paola Rioseco, especialista en transformación emocional y claridad interna. Mi propósito es ayudar a líderes, equipos y personas a transitar desde la sobrecarga y el agotamiento hacia una vida consciente. A través de metodologías directas, facilito el orden mental necesario para enfrentar la presión, mejorar la toma de decisiones y desenvolverse en contextos humanos de alta exigencia, traduciendo experiencias complejas en una comprensión simple y aplicable.
                 </p>
 
                 <p>
-                  No trabajo desde la complicación. Vamos a la raíz, sacamos el 
-                  tapón y empieza a fluir lo demás. Limpieza del disco duro emocional, 
-                  orden, y herramientas concretas.
-                </p>
-
-                <p className="font-medium text-ink">
-                  No prometo soluciones mágicas. Prometo claridad, estructura y verdad.
+                  Mi enfoque se cimenta en la "Responsabilidad Radical" como motor para que recuperes tu soberanía consciente. Al asumir la innegable ley de causa y efecto y aplicar el principio de correspondencia (como es adentro, es el entorno), comprenderás que la verdadera resiliencia operativa y personal no depende de las circunstancias externas. Te acompaño a desactivar tus automatismos emocionales para que dejes de reaccionar frente al conflicto y comiences a dirigir tu realidad con seguridad y coherencia.
                 </p>
               </div>
             </div>
@@ -84,17 +76,13 @@ export default function SobreMiPage() {
         </div>
       </section>
 
-      {/* Mi Enfoque Section */}
+      {/* Valores Section */}
       <section className="py-20 px-4 md:px-8 bg-primary/5">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="font-serif text-3xl md:text-4xl text-ink mb-4">
-              Ingeniería Social y Consciencia
+              Principios de trabajo
             </h2>
-            <p className="text-ink/70 text-lg max-w-2xl mx-auto">
-              Decodificamos la programación social que nos limita para recuperar 
-              nuestra esencia natural.
-            </p>
           </div>
 
           {/* Valores Grid */}
@@ -120,28 +108,31 @@ export default function SobreMiPage() {
         </div>
       </section>
 
-      {/* CTA Final */}
-      <section className="py-20 px-4 md:px-8">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="font-serif text-3xl md:text-4xl text-ink mb-6">
-            ¿Comenzamos?
-          </h2>
-
-          <p className="text-ink/70 text-lg mb-8">
-            Un primer paso es todo lo que necesitas para empezar a transformar tu vida.
-          </p>
-
-          <Link
-            href="https://wa.me/56999396166?text=Hola%20Paola,%20quiero%20conocer%20más%20sobre%20tu%20acompañamiento"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-white font-sans font-medium rounded-full hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20 text-lg"
-          >
-            Escríbeme por WhatsApp
-            <ArrowRight className="w-5 h-5" />
-          </Link>
+      {/* Fricción Comercial (BRAND-002) */}
+      <section className="py-16 px-4 md:px-8 bg-stone-100 border-y border-stone-200">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 md:p-10 border border-stone-200 shadow-sm">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-ink/5 flex items-center justify-center mt-1">
+                <svg className="w-5 h-5 text-ink/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-serif text-xl text-ink mb-4">
+                  Para quién NO es esto
+                </h3>
+                <p className="text-ink/70 leading-relaxed">
+                  Este espacio ofrece verdad, no consuelo. Mi trabajo no es para quienes buscan soluciones pasivas, operan desde la queja o el victimismo, ni para quienes esperan que su camino sea resuelto mediante la futurología o la adivinación. Este es un proceso diseñado estrictamente para quienes están dispuestos a abandonar las excusas y hacerse cargo del 100% de su propia evolución.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
+
+      {/* Sección de Contacto */}
+      <ContactSection />
     </div>
   );
 }
