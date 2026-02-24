@@ -6,20 +6,7 @@ import { Linkedin, Youtube, Mail } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Inicio" },
-  { href: "/empresas", label: "Soluciones Corporativas" },
-];
-
-const socialLinks = [
-  {
-    href: "https://linkedin.com/in/paolarioseco",
-    label: "LinkedIn",
-    icon: Linkedin,
-  },
-  {
-    href: "https://youtube.com/@paolarioseco",
-    label: "YouTube",
-    icon: Youtube,
-  },
+  { href: "/organizaciones", label: "Soluciones Corporativas" },
 ];
 
 export default function FooterB2B() {
@@ -58,9 +45,9 @@ export default function FooterB2B() {
             ))}
           </nav>
 
-          {/* Social Links + Email Icon (PRIV-002) */}
-          <div className="flex items-center gap-4">
-            {/* Email Icon - reemplaza texto visible */}
+          {/* Social Links - Tríada estricta: Correo, LinkedIn, YouTube (BRAND-005) */}
+          <div className="flex items-center justify-center gap-4">
+            {/* Email */}
             <a
               href="mailto:paorioseco@gmail.com"
               className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all"
@@ -69,27 +56,44 @@ export default function FooterB2B() {
               <Mail className="w-5 h-5" />
             </a>
             
-            {socialLinks.map((social) => {
-              const Icon = social.icon;
-              return (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all"
-                  aria-label={social.label}
-                >
-                  <Icon className="w-5 h-5" />
-                </a>
-              );
-            })}
+            {/* LinkedIn */}
+            <a
+              href="https://linkedin.com/in/paolarioseco"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="w-5 h-5" />
+            </a>
+            
+            {/* YouTube */}
+            <a
+              href="https://youtube.com/@paolarioseco"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all"
+              aria-label="YouTube"
+            >
+              <Youtube className="w-5 h-5" />
+            </a>
           </div>
 
           {/* Copyright */}
           <div className="pt-6 border-t border-white/10 w-full">
             <p className="text-white/50 text-xs">
               © 2026 Paola Rioseco. Todos los datos son tratados conforme a la Ley 21.719 de Protección de Datos Personales.
+            </p>
+            <p className="text-white/40 text-xs mt-2">
+              Desarrollado por{" "}
+              <a 
+                href="https://sint.cl" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-white/60 transition-colors"
+              >
+                sint.cl
+              </a>
             </p>
           </div>
         </div>

@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { RECAPTCHA_CONFIG, PRIVACY_CONFIG } from "@/lib/config";
+import { getRecaptchaToken, loadRecaptchaScript, verifyRecaptchaToken } from "@/lib/recaptcha";
 
 interface FormData {
   nombre: string;
@@ -13,6 +15,7 @@ interface FormData {
 export default function CorporateForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [recaptchaError, setRecaptchaError] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>({
     nombre: "",
     cargo: "",
@@ -20,6 +23,11 @@ export default function CorporateForm() {
     empresa: "",
     aceptaPrivacidad: false,
   });
+
+  // Cargar reCAPTCHA v3 al montar (PRIV-002)
+  useEffect(() => {
+    loadRecaptchaScript();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -31,6 +39,7 @@ export default function CorporateForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setRecaptchaError(null);
     
     // Honeypot check - si el campo website está lleno, es spam
     const formElement = e.currentTarget;
@@ -45,6 +54,24 @@ export default function CorporateForm() {
     }
 
     setIsSubmitting(true);
+
+    // reCAPTCHA v3 - Obtener token (PRIV-002)
+    const recaptchaToken = await getRecaptchaToken(RECAPTCHA_CONFIG.actions.contactB2B);
+    
+    if (!recaptchaToken) {
+      setRecaptchaError("Error de verificación de seguridad. Por favor, intenta de nuevo.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Verificar token con backend
+    const verification = await verifyRecaptchaToken(recaptchaToken);
+    
+    if (!verification.success) {
+      setRecaptchaError("No se pudo verificar el envío. Por favor, intenta de nuevo.");
+      setIsSubmitting(false);
+      return;
+    }
     
     // Simular envío a paorioseco@gmail.com
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -171,11 +198,17 @@ export default function CorporateForm() {
             className="w-5 h-5 mt-0.5 rounded border-ink/20 text-primary focus:ring-primary/20 cursor-pointer"
           />
           <span className="text-xs text-muted leading-relaxed">
-            Autorizo el tratamiento de mis datos personales conforme a la Ley 21.719 y declaro que he leído la política de privacidad. 
-            Entiendo que estos datos serán utilizados exclusivamente para coordinar la evaluación diagnóstica de riesgo psicosocial.
+            {PRIVACY_CONFIG.fullNotice}
           </span>
         </label>
       </div>
+
+      {/* Error de reCAPTCHA */}
+      {recaptchaError && (
+        <div className="p-3 bg-red-50 border border-red-200 rounded-xl">
+          <p className="text-sm text-red-600">{recaptchaError}</p>
+        </div>
+      )}
 
       {/* Botón de envío */}
       <button

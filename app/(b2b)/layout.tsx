@@ -1,3 +1,4 @@
+import HeaderB2B from "@/components/b2b/HeaderB2B";
 import FooterB2B from "@/components/b2b/FooterB2B";
 
 export const metadata = {
@@ -12,7 +13,8 @@ export default function B2BLayout({
 }>) {
   return (
     <>
-      {children}
+      <HeaderB2B />
+      <main className="pt-20">{children}</main>
       <FooterB2B />
     </>
   );

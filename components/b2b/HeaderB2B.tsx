@@ -7,12 +7,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { href: "/personas/biblioteca", label: "Biblioteca" },
-  { href: "/personas", label: "Acompañamiento" },
-  { href: "/sobre-mi", label: "Sobre mí" },
+  { href: "/", label: "Portal de Acceso" },
+  { href: "#contacto", label: "Contacto" },
 ];
 
-export default function Header() {
+export default function HeaderB2B() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -24,6 +23,19 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Smooth scroll handler for anchor links
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const targetId = href.replace("#", "");
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+      setIsMobileMenuOpen(false);
+    }
+  };
 
   return (
     <>
@@ -54,32 +66,20 @@ export default function Header() {
             />
           </Link>
 
-          {/* Desktop Navigation - Tipografía Premium */}
+          {/* Desktop Navigation - Minimalista y Autoritario */}
           <nav className="hidden md:flex items-center gap-10">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={(e) => handleAnchorClick(e, link.href)}
                 className="font-sans text-lg font-medium tracking-wide text-ink/70 hover:text-primary transition-colors duration-300 relative group"
               >
                 {link.label}
-                {/* Línea decorativa sutil en hover */}
                 <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
           </nav>
-
-          {/* Desktop Contact Button */}
-          <div className="hidden md:block">
-            <Link
-              href="https://wa.me/56999396166"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-2.5 bg-primary text-white font-sans text-sm font-medium rounded-full hover:bg-primary/90 transition-colors duration-200"
-            >
-              Contacto
-            </Link>
-          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -126,30 +126,13 @@ export default function Header() {
                   >
                     <Link
                       href={link.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block py-3 px-4 font-sans text-base font-medium text-ink/80 hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-200"
+                      onClick={(e) => handleAnchorClick(e, link.href)}
+                      className="block py-3 px-4 font-sans text-lg font-medium text-ink/80 hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-200"
                     >
                       {link.label}
                     </Link>
                   </motion.div>
                 ))}
-
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: navLinks.length * 0.05 + 0.1 }}
-                  className="mt-4 pt-4 border-t border-ink/10"
-                >
-                  <Link
-                    href="https://wa.me/56999396166"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block py-3 px-4 text-center bg-primary text-white font-sans text-base font-medium rounded-full hover:bg-primary/90 transition-colors duration-200"
-                  >
-                    Contacto
-                  </Link>
-                </motion.div>
               </nav>
             </motion.div>
           </>

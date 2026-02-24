@@ -1,7 +1,8 @@
 import Link from "next/link";
+import { WHATSAPP_CONFIG } from "@/lib/config";
 import CorporateForm from "@/components/b2b/CorporateForm";
 
-export default function EmpresasPage() {
+export default function OrganizacionesPage() {
   const isB2BEnabled = process.env.NEXT_PUBLIC_ENABLE_B2B === 'true';
 
   // Vista "Apagada" - Feature Flag desactivado
@@ -70,7 +71,7 @@ export default function EmpresasPage() {
                 Desactivamos los bloqueos frente a la incertidumbre y el error. Dotamos a líderes y equipos de herramientas de regulación interna para optimizar la toma de decisiones, consolidando la seguridad psicológica y transformando los desafíos en resiliencia operativa.
               </p>
             </div>
-            <div className="bg-white rounded-2xl p-8 border border-ink/10 shadow-sm">
+            <div id="contacto" className="bg-white rounded-2xl p-8 border border-ink/10 shadow-sm scroll-mt-24">
               <CorporateForm />
             </div>
           </div>
@@ -214,7 +215,7 @@ export default function EmpresasPage() {
             en su entorno de trabajo.
           </p>
           <a
-            href="https://wa.me/56999396166?text=Hola%20Paola%2C%20escribo%20en%20representaci%C3%B3n%20de%20mi%20organizaci%C3%B3n.%20Me%20interesa%20conocer%20m%C3%A1s%20sobre%20el%20programa%20de%20Gesti%C3%B3n%20del%20Miedo..."
+            href={WHATSAPP_CONFIG.getLinkWithText('b2b')}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-4 bg-[#25D366] text-white rounded-full font-sans font-medium hover:bg-[#128C7E] transition-colors"
@@ -229,34 +230,6 @@ export default function EmpresasPage() {
           </p>
         </div>
       </section>
-
-      {/* Footer institucional */}
-      <footer className="bg-ink text-paper py-12 px-4 md:px-8">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="text-center md:text-left">
-              <h3 className="font-serif text-xl mb-2">Paola Rioseco</h3>
-              <p className="text-white/60 text-sm">Consultora en Desarrollo Humano y Gestión Emocional</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <a 
-                href="mailto:paorioseco@gmail.com" 
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-white/20 hover:text-white transition-all"
-                aria-label="Enviar email"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div className="mt-8 pt-6 border-t border-white/10 text-center">
-            <p className="text-white/40 text-xs">
-              © 2026 Paola Rioseco. Todos los datos son tratados conforme a la Ley 21.719 de Protección de Datos Personales.
-            </p>
-          </div>
-        </div>
-      </footer>
     </main>
   );
 }

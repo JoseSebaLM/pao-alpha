@@ -6,8 +6,8 @@ import { Linkedin, Youtube, Instagram, Mail } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Inicio" },
-  { href: "/biblioteca", label: "Biblioteca" },
-  { href: "/servicios", label: "Servicios" },
+  { href: "/personas/biblioteca", label: "Biblioteca" },
+  { href: "/personas", label: "Acompañamiento" },
   { href: "/sobre-mi", label: "Sobre mí" },
 ];
 
@@ -88,10 +88,24 @@ export default function FooterB2C() {
             })}
           </div>
 
-          {/* Copyright */}
+          {/* Copyright + Ley 21.719 (PRIV-001) */}
           <div className="pt-6 border-t border-white/10 w-full">
             <p className="text-white/50 text-xs">
               © 2026 Paola Rioseco. Conocimiento para la transformación personal.
+            </p>
+            <p className="text-white/40 text-xs mt-2">
+              Todos los datos personales son tratados conforme a la Ley 21.719 de Protección de Datos Personales.
+            </p>
+            <p className="text-white/40 text-xs mt-2">
+              Desarrollado por{" "}
+              <a 
+                href="https://sint.cl" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-white/60 transition-colors"
+              >
+                sint.cl
+              </a>
             </p>
           </div>
         </div>

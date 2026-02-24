@@ -132,7 +132,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       {/* Navegación */}
       <nav className="px-4 md:px-8 pb-12 max-w-3xl mx-auto border-t border-ink/10 pt-8">
         <Link
-          href="/biblioteca"
+          href="/personas/biblioteca"
           className="inline-flex items-center gap-2 text-muted hover:text-primary transition-colors font-sans text-sm"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

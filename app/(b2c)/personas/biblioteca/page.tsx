@@ -78,7 +78,7 @@ export default function BibliotecaPage() {
             {articles.map((article) => (
               <Link
                 key={article.slug}
-                href={`/biblioteca/${article.slug}`}
+                href={`/personas/biblioteca/${article.slug}`}
                 className="group block p-6 border border-ink/10 rounded-2xl hover:border-primary hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 bg-white"
               >
                 {/* Categoría y tiempo */}
@@ -118,13 +118,13 @@ export default function BibliotecaPage() {
       {/* Botón volver */}
       <div className="px-4 md:px-8 pb-12 max-w-5xl mx-auto">
         <Link
-          href="/"
+          href="/personas"
           className="inline-flex items-center gap-2 text-muted hover:text-primary transition-colors font-sans text-sm"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          Volver al inicio
+          Volver a Acompañamiento
         </Link>
       </div>
     </main>
