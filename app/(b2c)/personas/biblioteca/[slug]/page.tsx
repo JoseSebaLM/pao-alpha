@@ -1,59 +1,26 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { remark } from 'remark';
-import html from 'remark-html';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { Metadata } from "next";
+import { getArticleBySlug, generateArticleParams, ArticleWithContent } from "@/lib/mdx";
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
-interface ArticleData {
-  title: string;
-  date: string;
-  excerpt: string;
-  category: string;
-  readTime: string;
-  contentHtml: string;
-}
-
-async function getArticle(slug: string): Promise<ArticleData | null> {
-  const filePath = path.join(process.cwd(), 'content', 'biblioteca', `${slug}.md`);
-  
-  if (!fs.existsSync(filePath)) {
-    return null;
-  }
-  
-  const fileContent = fs.readFileSync(filePath, 'utf-8');
-  const { data, content } = matter(fileContent);
-  
-  // Procesar Markdown a HTML
-  const processedContent = await remark().use(html).process(content);
-  const contentHtml = processedContent.toString();
-  
-  return {
-    title: data.title || 'Sin título',
-    date: data.date || '',
-    excerpt: data.excerpt || '',
-    category: data.category || 'General',
-    readTime: data.readTime || '5 min',
-    contentHtml,
-  };
+async function getArticle(slug: string): Promise<ArticleWithContent | null> {
+  return getArticleBySlug("biblioteca-personal", slug);
 }
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
   const article = await getArticle(slug);
-  
+
   if (!article) {
     return {
-      title: 'Artículo no encontrado',
+      title: "Artículo no encontrado",
     };
   }
-  
+
   return {
     title: `${article.title} | Biblioteca`,
     description: article.excerpt,
@@ -61,23 +28,13 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 }
 
 export async function generateStaticParams() {
-  const contentDir = path.join(process.cwd(), 'content', 'biblioteca');
-  
-  if (!fs.existsSync(contentDir)) {
-    return [];
-  }
-  
-  const files = fs.readdirSync(contentDir).filter(file => file.endsWith('.md'));
-  
-  return files.map((file) => ({
-    slug: file.replace('.md', ''),
-  }));
+  return generateArticleParams("biblioteca-personal");
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
   const article = await getArticle(slug);
-  
+
   if (!article) {
     notFound();
   }

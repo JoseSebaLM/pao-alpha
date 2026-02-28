@@ -1,56 +1,14 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import Link from 'next/link';
-import { Metadata } from 'next';
+import Link from "next/link";
+import { Metadata } from "next";
+import { getAllArticles } from "@/lib/mdx";
 
 export const metadata: Metadata = {
-  title: 'Biblioteca | Archivo de Conciencia',
-  description: 'Artículos sobre consciencia, coherencia y bienestar.',
+  title: "Biblioteca | Archivo de Conciencia",
+  description: "Artículos sobre consciencia, coherencia y bienestar.",
 };
 
-interface Article {
-  slug: string;
-  title: string;
-  date: string;
-  excerpt: string;
-  category: string;
-  readTime: string;
-}
-
-function getArticles(): Article[] {
-  const contentDir = path.join(process.cwd(), 'content', 'biblioteca');
-  
-  if (!fs.existsSync(contentDir)) {
-    return [];
-  }
-  
-  const files = fs.readdirSync(contentDir).filter(file => file.endsWith('.md'));
-  
-  const articles = files.map((filename) => {
-    const slug = filename.replace('.md', '');
-    const filePath = path.join(contentDir, filename);
-    const fileContent = fs.readFileSync(filePath, 'utf-8');
-    const { data } = matter(fileContent);
-    
-    return {
-      slug,
-      title: data.title || 'Sin título',
-      date: data.date || '',
-      excerpt: data.excerpt || '',
-      category: data.category || 'General',
-      readTime: data.readTime || '5 min',
-    };
-  });
-  
-  // Ordenar por fecha descendente
-  return articles.sort((a, b) => 
-    new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
-}
-
 export default function BibliotecaPage() {
-  const articles = getArticles();
+  const articles = getAllArticles("biblioteca-personal");
   
   return (
     <main className="min-h-screen bg-paper">
@@ -70,8 +28,9 @@ export default function BibliotecaPage() {
       {/* Grid de artículos */}
       <section className="px-4 md:px-8 pb-24 max-w-5xl mx-auto">
         {articles.length === 0 ? (
-          <div className="text-center py-20">
+          <div className="text-center py-20 bg-stone-50 rounded-2xl border border-ink/10">
             <p className="text-muted font-sans">No hay artículos disponibles aún.</p>
+            <p className="text-sm text-muted/60 mt-2">Próximamente nuevo contenido.</p>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 gap-6">

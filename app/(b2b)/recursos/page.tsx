@@ -1,63 +1,21 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import Link from 'next/link';
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import Link from "next/link";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { FEATURE_FLAGS } from "@/lib/config";
+import { getAllArticles } from "@/lib/mdx";
 
 export const metadata: Metadata = {
-  title: 'Recursos Corporativos | Gestión del Riesgo Psicosocial',
-  description: 'Artículos sobre seguridad psicológica, resiliencia operativa y gestión del riesgo psicosocial en organizaciones.',
+  title: "Recursos Corporativos | Gestión del Riesgo Psicosocial",
+  description: "Artículos sobre seguridad psicológica, resiliencia operativa y gestión del riesgo psicosocial en organizaciones.",
 };
-
-interface Article {
-  slug: string;
-  title: string;
-  date: string;
-  excerpt: string;
-  category: string;
-  readTime: string;
-}
-
-function getArticles(): Article[] {
-  const contentDir = path.join(process.cwd(), 'content', 'biblioteca-corporativa');
-  
-  if (!fs.existsSync(contentDir)) {
-    return [];
-  }
-  
-  const files = fs.readdirSync(contentDir).filter(file => file.endsWith('.md'));
-  
-  const articles = files.map((filename) => {
-    const slug = filename.replace('.md', '');
-    const filePath = path.join(contentDir, filename);
-    const fileContent = fs.readFileSync(filePath, 'utf-8');
-    const { data } = matter(fileContent);
-    
-    return {
-      slug,
-      title: data.title || 'Sin título',
-      date: data.date || '',
-      excerpt: data.excerpt || '',
-      category: data.category || 'General',
-      readTime: data.readTime || '5 min',
-    };
-  });
-  
-  return articles.sort((a, b) => 
-    new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
-}
 
 export default function RecursosCorporativosPage() {
   // Feature Flag para biblioteca B2B
-  const isLibraryEnabled = process.env.NEXT_PUBLIC_ENABLE_B2B_LIBRARY === 'true';
-  
-  if (!isLibraryEnabled) {
+  if (!FEATURE_FLAGS.b2bLibraryEnabled) {
     notFound();
   }
-  
-  const articles = getArticles();
+
+  const articles = getAllArticles("biblioteca-corporativa");
   
   return (
     <main className="min-h-screen bg-paper">

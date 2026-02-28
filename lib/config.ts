@@ -3,8 +3,25 @@
  * Single Source of Truth para datos contacto y mensajes obligatorios
  */
 
+// Tipos para WhatsApp
+interface WhatsAppMessages {
+  default: string;
+  b2b: string;
+  mentoring: string;
+  tarot: string;
+  workshop: string;
+}
+
+interface WhatsAppConfig {
+  number: string;
+  readonly link: string;
+  warningText: string;
+  messages: WhatsAppMessages;
+  getLinkWithText(context?: keyof WhatsAppMessages): string;
+}
+
 // WhatsApp Configuration (PRIV-002 / BRAND-003)
-export const WHATSAPP_CONFIG = {
+export const WHATSAPP_CONFIG: WhatsAppConfig = {
   number: "56999396166",
   get link() {
     return `https://wa.me/${this.number}`;
@@ -19,10 +36,10 @@ export const WHATSAPP_CONFIG = {
     tarot: encodeURIComponent("Hola Paola, quiero consultar disponibilidad para tarot"),
     workshop: encodeURIComponent("Hola Paola, quiero reservar mi lugar para el workshop Vida Consciente"),
   },
-  getLinkWithText(context: keyof typeof WHATSAPP_CONFIG.messages = 'default'): string {
-    return `${this.link}?text=${WHATSAPP_CONFIG.messages[context]}`;
-  },
-} as const;
+  getLinkWithText(context: keyof WhatsAppMessages = "default"): string {
+    return `${this.link}?text=${this.messages[context]}`;
+  }
+};
 
 // Email Configuration
 export const EMAIL_CONFIG = {
