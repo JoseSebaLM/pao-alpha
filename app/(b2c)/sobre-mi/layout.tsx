@@ -1,4 +1,3 @@
-import FooterSobreMi from "@/components/b2c/FooterSobreMi";
 import FloatingWhatsApp from "@/components/b2c/FloatingWhatsApp";
 
 export default function SobreMiLayout({
@@ -9,7 +8,6 @@ export default function SobreMiLayout({
   return (
     <>
       {children}
-      <FooterSobreMi />
       <FloatingWhatsApp />
     </>
   );

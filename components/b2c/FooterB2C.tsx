@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Linkedin, Youtube, Instagram, Mail } from "lucide-react";
+import { Linkedin, Youtube, Mail } from "lucide-react";
 
 const navLinks = [
+  { href: "/organizaciones", label: "Organizaciones" },
+  { href: "/personas", label: "Personas" },
+  { href: "/sobre-mi", label: "Sobre Mi" },
   { href: "/", label: "Inicio" },
-  { href: "/personas/biblioteca", label: "Biblioteca" },
-  { href: "/personas", label: "Acompañamiento" },
-  { href: "/sobre-mi", label: "Sobre mí" },
 ];
 
 const socialLinks = [
@@ -21,11 +21,6 @@ const socialLinks = [
     href: "https://youtube.com/@paolarioseco",
     label: "YouTube",
     icon: Youtube,
-  },
-  {
-    href: "https://instagram.com/paolarioseco",
-    label: "Instagram",
-    icon: Instagram,
   },
 ];
 
@@ -60,7 +55,7 @@ export default function FooterB2C() {
             ))}
           </nav>
 
-          {/* Social Links - LinkedIn, YouTube, Instagram + Email Icon */}
+          {/* Social Links - Email, LinkedIn, YouTube (sin Instagram) */}
           <div className="flex items-center gap-4">
             {/* Email Icon */}
             <a
