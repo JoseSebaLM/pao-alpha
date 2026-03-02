@@ -60,8 +60,8 @@ function getSlugs(silo: ContentSilo): string[] {
 async function getMarkdownContent(silo: ContentSilo, slug: string): Promise<string | null> {
   try {
     // Import dinámico del archivo markdown como string
-    const module = await import(`@/content/${silo}/${slug}.md`);
-    return module.default || module;
+    const mdModule = await import(`@/content/${silo}/${slug}.md`);
+    return mdModule.default || mdModule;
   } catch (error) {
     console.error(`Error loading ${silo}/${slug}.md:`, error);
     return null;
