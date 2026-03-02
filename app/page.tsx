@@ -2,10 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+
 import { motion, Variants } from "framer-motion";
-import { WHATSAPP_CONFIG, EMAIL_CONFIG, FEATURE_FLAGS } from "@/lib/config";
+import { WHATSAPP_CONFIG, EMAIL_CONFIG } from "@/lib/config";
 import FloatingWhatsApp from "@/components/b2c/FloatingWhatsApp";
 
 // Animation variants - Glass Box Architecture
@@ -46,23 +45,6 @@ const cardVariants: Variants = {
 };
 
 export default function SiloCero() {
-  const router = useRouter();
-  
-  // Glass Box: Feature Flag logic explicit
-  const isB2BEnabled = FEATURE_FLAGS.b2bEnabled;
-
-  // Redirect to B2C if B2B is disabled (client-side)
-  useEffect(() => {
-    if (!isB2BEnabled) {
-      router.push("/personas");
-    }
-  }, [isB2BEnabled, router]);
-
-  // Don't render while checking redirect condition
-  if (!isB2BEnabled) {
-    return null;
-  }
-
   return (
     <>
       <main className="min-h-screen bg-paper flex flex-col items-center justify-center px-4">

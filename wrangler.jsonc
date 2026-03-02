@@ -6,6 +6,10 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
+  "vars": {
+    "NEXT_PUBLIC_ENABLE_B2B": "true",
+    "NEXT_PUBLIC_ENABLE_B2B_LIBRARY": "true"
+  },
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
