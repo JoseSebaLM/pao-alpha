@@ -1,10 +1,9 @@
 /**
  * Utilidades MDX - Paola Rioseco
  * Funciones centralizadas para leer y procesar contenido Markdown
+ * Compatible con Cloudflare Workers (sin fs)
  */
 
-import fs from "fs";
-import path from "path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
@@ -28,11 +27,45 @@ export interface ArticleWithContent extends Article {
   contentHtml: string;
 }
 
+// Lista de slugs para biblioteca personal (B2C)
+const BIBLIOTECA_PERSONAL_SLUGS = [
+  "el-garage-5-autos",
+  "el-miedo-como-aliado",
+  "el-verbo-creador",
+  "principio-de-correspondencia",
+  "ser-hacer-tener-vida-consciente",
+  "soberania-consciente-causa-efecto",
+];
+
+// Lista de slugs para biblioteca corporativa (B2B)
+const BIBLIOTECA_CORPORATIVA_SLUGS = [
+  "comunicacion-consciente-cohesion-equipos",
+  "gestion-del-miedo-incertidumbre-cambio",
+  "los-5-autos-en-el-trabajo",
+  "regulacion-emocional-decisiones-conscientes",
+  "seguridad-psicologica-en-el-trabajo",
+  "ser-hacer-luego-tener",
+];
+
+function getSlugs(silo: ContentSilo): string[] {
+  return silo === "biblioteca-personal" 
+    ? BIBLIOTECA_PERSONAL_SLUGS 
+    : BIBLIOTECA_CORPORATIVA_SLUGS;
+}
+
 /**
- * Obtiene la ruta absoluta al directorio de contenido
+ * Obtiene el contenido raw de un archivo markdown
+ * Usa imports dinámicos para compatibilidad con Cloudflare
  */
-function getContentDir(silo: ContentSilo): string {
-  return path.join(process.cwd(), "content", silo);
+async function getMarkdownContent(silo: ContentSilo, slug: string): Promise<string | null> {
+  try {
+    // Import dinámico del archivo markdown como string
+    const module = await import(`@/content/${silo}/${slug}.md`);
+    return module.default || module;
+  } catch (error) {
+    console.error(`Error loading ${silo}/${slug}.md:`, error);
+    return null;
+  }
 }
 
 /**
@@ -40,34 +73,35 @@ function getContentDir(silo: ContentSilo): string {
  * @param silo - Tipo de biblioteca ('biblioteca-personal' | 'biblioteca-corporativa')
  * @returns Array de artículos ordenados por fecha descendente
  */
-export function getAllArticles(silo: ContentSilo): Article[] {
-  const contentDir = getContentDir(silo);
-
-  if (!fs.existsSync(contentDir)) {
-    return [];
-  }
-
-  const files = fs.readdirSync(contentDir).filter((file) => file.endsWith(".md"));
-
-  const articles = files.map((filename) => {
-    const slug = filename.replace(".md", "");
-    const filePath = path.join(contentDir, filename);
-    const fileContent = fs.readFileSync(filePath, "utf-8");
-    const { data } = matter(fileContent);
-
-    return {
-      slug,
-      title: data.title || "Sin título",
-      date: data.date || "",
-      excerpt: data.excerpt || "",
-      category: data.category || "General",
-      author: data.author || "Paola Rioseco",
-      readTime: data.readTime || "5 min",
-    };
-  });
-
-  // Ordenar por fecha descendente (más recientes primero)
-  return articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+export async function getAllArticles(silo: ContentSilo): Promise<Article[]> {
+  const slugs = getSlugs(silo);
+  
+  const articles = await Promise.all(
+    slugs.map(async (slug) => {
+      const content = await getMarkdownContent(silo, slug);
+      
+      if (!content) {
+        return null;
+      }
+      
+      const { data } = matter(content);
+      
+      return {
+        slug,
+        title: data.title || "Sin título",
+        date: data.date || "",
+        excerpt: data.excerpt || "",
+        category: data.category || "General",
+        author: data.author || "Paola Rioseco",
+        readTime: data.readTime || "5 min",
+      };
+    })
+  );
+  
+  // Filtrar nulos y ordenar por fecha descendente
+  return articles
+    .filter((article): article is Article => article !== null)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 /**
@@ -80,19 +114,18 @@ export async function getArticleBySlug(
   silo: ContentSilo,
   slug: string
 ): Promise<ArticleWithContent | null> {
-  const filePath = path.join(getContentDir(silo), `${slug}.md`);
-
-  if (!fs.existsSync(filePath)) {
+  const content = await getMarkdownContent(silo, slug);
+  
+  if (!content) {
     return null;
   }
-
-  const fileContent = fs.readFileSync(filePath, "utf-8");
-  const { data, content } = matter(fileContent);
-
+  
+  const { data, content: markdownContent } = matter(content);
+  
   // Procesar Markdown a HTML
-  const processedContent = await remark().use(html).process(content);
+  const processedContent = await remark().use(html).process(markdownContent);
   const contentHtml = processedContent.toString();
-
+  
   return {
     slug,
     title: data.title || "Sin título",
@@ -111,17 +144,8 @@ export async function getArticleBySlug(
  * @returns Array de objetos con slugs para generateStaticParams
  */
 export function generateArticleParams(silo: ContentSilo): { slug: string }[] {
-  const contentDir = getContentDir(silo);
-
-  if (!fs.existsSync(contentDir)) {
-    return [];
-  }
-
-  const files = fs.readdirSync(contentDir).filter((file) => file.endsWith(".md"));
-
-  return files.map((file) => ({
-    slug: file.replace(".md", ""),
-  }));
+  const slugs = getSlugs(silo);
+  return slugs.map((slug) => ({ slug }));
 }
 
 /**
@@ -130,6 +154,6 @@ export function generateArticleParams(silo: ContentSilo): { slug: string }[] {
  * @param slug - Nombre del archivo sin extensión
  */
 export function articleExists(silo: ContentSilo, slug: string): boolean {
-  const filePath = path.join(getContentDir(silo), `${slug}.md`);
-  return fs.existsSync(filePath);
+  const slugs = getSlugs(silo);
+  return slugs.includes(slug);
 }

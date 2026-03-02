@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function BibliotecaCorporativaPage() {
-  const articles = getAllArticles("biblioteca-corporativa");
+  const articles = await getAllArticles("biblioteca-corporativa");
   
   return (
     <main className="min-h-screen bg-paper">
