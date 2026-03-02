@@ -7,8 +7,6 @@ author: "Paola Rioseco"
 readTime: "4 min"
 ---
 
-# Gestión Emocional: La clave para tomar Decisiones Conscientes
-
 En el mundo corporativo, históricamente ha existido el mito de que "las emociones se dejan en la casa". Sin embargo, frente a la presión, los plazos ajustados y la incertidumbre, son precisamente nuestros automatismos emocionales los que toman el mando. Si un líder no gestiona su mundo interno, sus directrices dejarán de ser estratégicas y pasarán a ser meras reacciones impulsivas.
 
 Actualmente, la regulación emocional ya no es considerada una "habilidad blanda"; es una **competencia ejecutiva crítica** y el pilar de la toma de decisiones asertiva y la **resiliencia operativa**.

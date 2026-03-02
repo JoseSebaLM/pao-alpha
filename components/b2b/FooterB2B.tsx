@@ -5,8 +5,10 @@ import Image from "next/image";
 import { Linkedin, Youtube, Mail } from "lucide-react";
 
 const navLinks = [
+  { href: "/organizaciones", label: "Organizaciones" },
+  { href: "/recursos", label: "Biblioteca" },
+  { href: "/sobre-mi", label: "Sobre Mi" },
   { href: "/", label: "Inicio" },
-  { href: "/organizaciones", label: "Soluciones Corporativas" },
 ];
 
 export default function FooterB2B() {

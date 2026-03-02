@@ -68,21 +68,76 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       {/* Contenido del artículo */}
       <article className="px-4 md:px-8 pb-24 max-w-3xl mx-auto">
         <div 
-          className="prose prose-lg max-w-none
-            prose-headings:font-serif prose-headings:text-ink
-            prose-h1:text-3xl prose-h1:mt-12 prose-h1:mb-6
-            prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
-            prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
-            prose-p:text-muted prose-p:font-sans prose-p:leading-relaxed prose-p:mb-6
-            prose-strong:text-ink prose-strong:font-medium
-            prose-blockquote:border-l-2 prose-blockquote:border-primary prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-muted
-            prose-ul:list-disc prose-ul:pl-6 prose-ul:mb-6 prose-li:text-muted prose-li:font-sans prose-li:mb-2
-            prose-ol:list-decimal prose-ol:pl-6 prose-ol:mb-6
-            prose-hr:border-ink/10 prose-hr:my-12
-            prose-a:text-primary prose-a:underline prose-a:underline-offset-4 prose-a:decoration-primary/30 hover:prose-a:decoration-primary
-            prose-code:text-primary prose-code:bg-primary/5 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-            prose-pre:bg-ink/5 prose-pre:p-4 prose-pre:rounded-xl"
-          dangerouslySetInnerHTML={{ __html: article.contentHtml }}
+          className="article-content text-muted font-sans leading-7"
+          dangerouslySetInnerHTML={{ 
+            __html: `
+              <style>
+                .article-content h2 {
+                  margin-top: 3.5rem !important;
+                  margin-bottom: 1.5rem !important;
+                  padding-bottom: 0.75rem !important;
+                  border-bottom: 1px solid rgba(28, 25, 23, 0.1) !important;
+                  font-size: 1.5rem !important;
+                  font-weight: 600 !important;
+                  color: #1C1917 !important;
+                  font-family: var(--font-lora), Lora, serif !important;
+                }
+                .article-content h3 {
+                  margin-top: 2.5rem !important;
+                  margin-bottom: 1rem !important;
+                  font-size: 1.25rem !important;
+                  font-weight: 600 !important;
+                  color: rgba(28, 25, 23, 0.9) !important;
+                  font-family: var(--font-lora), Lora, serif !important;
+                }
+                .article-content p {
+                  margin-bottom: 1.5rem !important;
+                  line-height: 1.75 !important;
+                  color: #78716C !important;
+                }
+                .article-content h2 + p,
+                .article-content h3 + p {
+                  margin-top: 1rem !important;
+                }
+                .article-content ul,
+                .article-content ol {
+                  margin-top: 1rem !important;
+                  margin-bottom: 1.5rem !important;
+                  padding-left: 1.5rem !important;
+                }
+                .article-content li {
+                  margin-bottom: 0.75rem !important;
+                  line-height: 1.75 !important;
+                }
+                .article-content ul {
+                  list-style-type: disc !important;
+                }
+                .article-content ol {
+                  list-style-type: decimal !important;
+                }
+                .article-content strong {
+                  color: #1C1917 !important;
+                  font-weight: 600 !important;
+                }
+                .article-content a {
+                  color: #C01D65 !important;
+                  text-decoration: underline !important;
+                  text-underline-offset: 4px !important;
+                }
+                .article-content blockquote {
+                  border-left: 4px solid #C01D65 !important;
+                  padding-left: 1.5rem !important;
+                  margin: 2rem 0 !important;
+                  font-style: italic !important;
+                }
+                .article-content hr {
+                  margin: 3rem 0 !important;
+                  border-color: rgba(28, 25, 23, 0.1) !important;
+                }
+              </style>
+              ${article.contentHtml}
+            ` 
+          }}
         />
       </article>
 

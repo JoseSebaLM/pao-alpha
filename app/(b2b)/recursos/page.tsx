@@ -1,20 +1,13 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { FEATURE_FLAGS } from "@/lib/config";
 import { getAllArticles } from "@/lib/mdx";
 
 export const metadata: Metadata = {
-  title: "Recursos Corporativos | Gestión del Riesgo Psicosocial",
+  title: "Biblioteca Corporativa | Gestión del Riesgo Psicosocial",
   description: "Artículos sobre seguridad psicológica, resiliencia operativa y gestión del riesgo psicosocial en organizaciones.",
 };
 
-export default function RecursosCorporativosPage() {
-  // Feature Flag para biblioteca B2B
-  if (!FEATURE_FLAGS.b2bLibraryEnabled) {
-    notFound();
-  }
-
+export default function BibliotecaCorporativaPage() {
   const articles = getAllArticles("biblioteca-corporativa");
   
   return (
@@ -25,7 +18,7 @@ export default function RecursosCorporativosPage() {
           Conocimiento Institucional
         </span>
         <h1 className="font-serif text-4xl md:text-5xl text-ink mb-4">
-          Recursos Corporativos
+          Biblioteca Corporativa
         </h1>
         <p className="text-muted text-lg font-sans max-w-2xl">
           Publicaciones especializadas en seguridad psicológica, resiliencia operativa y gestión del riesgo psicosocial.
@@ -81,7 +74,7 @@ export default function RecursosCorporativosPage() {
         )}
       </section>
 
-      {/* CTA a diagnóstico */}
+      {/* CTA a contacto */}
       <section className="px-4 md:px-8 pb-12 max-w-5xl mx-auto">
         <div className="bg-stone-100 rounded-2xl p-8 text-center">
           <h3 className="font-serif text-2xl text-ink mb-4">
@@ -91,7 +84,7 @@ export default function RecursosCorporativosPage() {
             Nuestro equipo puede realizar un diagnóstico específico de riesgo psicosocial para su organización.
           </p>
           <Link
-            href="/empresas"
+            href="/organizaciones"
             className="inline-flex items-center gap-2 px-6 py-3 bg-ink text-white rounded-full font-sans font-medium hover:bg-ink/90 transition-colors"
           >
             Solicitar evaluación diagnóstica

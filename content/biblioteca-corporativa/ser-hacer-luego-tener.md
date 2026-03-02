@@ -7,8 +7,6 @@ author: "Paola Rioseco"
 readTime: "4 min"
 ---
 
-# Ser y Hacer; luego Tener. El Orden del Liderazgo Consciente
-
 Tradicionalmente, las culturas organizacionales han operado bajo una premisa de sobrecarga y desgaste continuo: HACER mucho para TENER resultados y, finalmente, intentar SER un equipo exitoso. Sin embargo, esta lógica fomenta la fatiga, reduce la adaptabilidad y agudiza el **síndrome de desgaste profesional (burnout)**. 
 
 Mi propuesta es invertir radicalmente este enfoque: para construir una verdadera **resiliencia operativa** y traducir los entornos de crisis en oportunidades de innovación, debemos aplicar el principio fundamental de primero SER, para luego HACER, y finalmente TENER.

@@ -3,7 +3,11 @@
 import { useState } from "react";
 import { WHATSAPP_CONFIG } from "@/lib/config";
 
-export default function FloatingWhatsApp() {
+interface FloatingWhatsAppProps {
+  context?: "default" | "b2b" | "mentoring" | "tarot" | "workshop";
+}
+
+export default function FloatingWhatsApp({ context = "default" }: FloatingWhatsAppProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -29,7 +33,7 @@ export default function FloatingWhatsApp() {
 
       {/* Botón WhatsApp Flotante - Escala aumentada */}
       <a
-        href={WHATSAPP_CONFIG.getLinkWithText('default')}
+        href={WHATSAPP_CONFIG.getLinkWithText(context)}
         target="_blank"
         rel="noopener noreferrer"
         className="group flex items-center justify-center w-16 h-16 bg-[#25D366] rounded-full shadow-2xl shadow-[#25D366]/40 hover:shadow-[#25D366]/50 hover:scale-110 transition-all duration-300"

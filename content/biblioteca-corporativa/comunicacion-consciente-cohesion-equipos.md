@@ -7,8 +7,6 @@ author: "Paola Rioseco"
 readTime: "5 min"
 ---
 
-# Comunicación Consciente: Hacia la Cohesión de Equipos
-
 En el entorno laboral actual de alta exigencia, la comunicación trasciende la simple transmisión de directrices; es la base fundamental sobre la que se construye o destruye el clima de una organización. La forma en que interactuamos, las palabras que elegimos y la claridad con la que nos expresamos determinan directamente el nivel de **seguridad psicológica** y el rendimiento de los equipos de trabajo. 
 
 Un lenguaje inadecuado, especialmente en momentos de tensión o descontrol emocional, puede generar marcas que afecten la confianza y la productividad a largo plazo. Por ello, desarrollar una comunicación consciente ya no es una "habilidad blanda" secundaria, sino un **requisito técnico para el liderazgo estratégico**.

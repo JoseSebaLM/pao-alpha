@@ -115,7 +115,7 @@ export default function CorporateForm() {
       <div className="text-center mb-6">
         <h3 className="font-serif text-xl text-ink mb-2">Solicitar evaluación diagnóstica</h3>
         <p className="text-sm text-muted">
-          Complete el formulario para acceder al informe preliminar de riesgo psicosocial
+          Completa el formulario para recibir tu diagnóstico organizacional.
         </p>
       </div>
 

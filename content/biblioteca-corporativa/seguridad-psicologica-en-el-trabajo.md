@@ -7,8 +7,6 @@ author: "Paola Rioseco"
 readTime: "4 min"
 ---
 
-# Seguridad Psicológica: El Valor de los Límites en el Trabajo
-
 En el entorno corporativo actual, existe una creencia arraigada de que el profesional ideal es aquel que siempre está disponible, que dice "sí" a toda exigencia y que posterga su propio bienestar en pos de la organización. Sin embargo, esta dinámica altera el orden natural de la eficiencia y es la ruta más rápida hacia el **síndrome de desgaste profesional (burnout)**.
 
 La verdadera **seguridad psicológica** en un equipo no se construye complaciendo a todos, sino a través de la claridad, la coherencia interna y la capacidad de establecer límites sanos. Cuando no existen fronteras claras, se abre la puerta para que liderazgos inconscientes abusen de las cargas laborales y se deteriore el clima organizacional.

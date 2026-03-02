@@ -7,9 +7,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { href: "/personas/biblioteca", label: "Biblioteca" },
-  { href: "/personas", label: "Acompañamiento" },
-  { href: "/sobre-mi", label: "Sobre mí" },
+  { href: "/organizaciones", label: "Organizaciones" },
+  { href: "/personas", label: "Personas" },
+  { href: "/sobre-mi", label: "Sobre Mi" },
 ];
 
 export default function Header() {

@@ -2,7 +2,7 @@
 
 > Este archivo contiene información esencial para que agentes de IA comprendan y trabajen eficientemente en este proyecto.
 > **Proyecto:** Plataforma de "Conocimiento de Vida" para Paola Rioseco - mentora de autoconocimiento y transformación personal.
-> **Última actualización:** 2026-02-27
+> **Última actualización:** 2026-03-02
 
 ---
 
@@ -10,7 +10,7 @@
 
 **Paola Rioseco | Vida Consciente** es una plataforma web que funciona como biblioteca viva y academia de transformación personal. No es un sitio de terapia, sino un espacio de conocimiento estructurado.
 
-- **Arquitectura:** Knowledge-First Platform
+- **Arquitectura:** Knowledge-First Platform con división B2B (organizaciones) y B2C (personas)
 - **UX Driver:** Claridad Mental, Estructura, "Cero Ruido"
 - **Lenguaje Visual:** Editorial (Serif moderna + Sans geométrica)
 - **Metodología:** SINT Stack (Glass Box Architecture)
@@ -30,21 +30,21 @@
 | Next.js | 16.1.6 | Framework principal con App Router |
 | React | 19.2.3 | UI Library |
 | TypeScript | 5.x | Tipado estático |
-| Tailwind CSS | 4.x | Estilos (nuevo sistema `@theme`) |
+| Tailwind CSS | 4.x | Estilos (nuevo sistema `@theme` en `globals.css`) |
 
 ### UI/UX
-- **Framer Motion** - Micro-interacciones y animaciones
-- **Lucide React** - Iconografía consistente
-- **Google Fonts** - Inter (sans) y Lora (serif)
+- **Framer Motion** ^12.33.0 - Micro-interacciones y animaciones
+- **Lucide React** ^0.563.0 - Iconografía consistente
+- **Google Fonts** - Inter (sans) y Lora (serif) via `next/font`
 
 ### Gestión de Contenidos
-- **gray-matter** - Parseo de frontmatter en Markdown
-- **remark + remark-html** - Procesamiento de Markdown a HTML
-- Contenido estático en `/content` (sin CMS headless aún)
+- **gray-matter** ^4.0.3 - Parseo de frontmatter en Markdown
+- **remark** ^15.0.1 + **remark-html** ^16.0.1 - Procesamiento de Markdown a HTML
+- Contenido estático en `/content` (sin CMS headless)
 
 ### Seguridad
 - **reCAPTCHA v3** - Protección anti-spam en formularios
-- **HMAC-SHA256** - Validación de webhooks de pago
+- **HMAC-SHA256** (Node.js crypto) - Validación de webhooks de pago
 - **Honeypot fields** - Protección adicional contra bots
 
 ---
@@ -85,18 +85,20 @@ pao-alpha/
 │   ├── b2c/                     # Componentes B2C
 │   │   ├── ContactForm.tsx
 │   │   ├── ContactSection.tsx
-│   │   ├── FloatingWhatsApp.tsx # Widget flotante
+│   │   ├── FloatingWhatsApp.tsx # Widget flotante con advertencia
 │   │   └── FooterB2C.tsx
 │   ├── content/
-│   │   └── ConceptCard.tsx      # Tarjeta de artículo reutilizable
+│   │   ├── ConceptCard.tsx      # Tarjeta de artículo reutilizable
+│   │   └── YouTubeEmbed.tsx     # Embed de videos de YouTube
 │   └── layout/
 │       ├── Header.tsx           # Navegación scroll-aware
 │       └── TriacomaNav.tsx      # Navegación 3 pilares
 ├── content/                     # Contenido Markdown
-│   ├── biblioteca-personal/     # Artículos B2C
-│   └── biblioteca-corporativa/  # Artículos B2B
+│   ├── biblioteca-personal/     # Artículos B2C (6 artículos)
+│   └── biblioteca-corporativa/  # Artículos B2B (6 artículos)
 ├── lib/                         # Utilidades
 │   ├── config.ts                # Single Source of Truth (contacto, flags, privacy)
+│   ├── mdx.ts                   # Helpers para leer/procesar Markdown
 │   └── recaptcha.ts             # Helpers de reCAPTCHA v3
 ├── public/                      # Assets estáticos
 │   ├── logo.png
@@ -125,7 +127,7 @@ pao-alpha/
 - **Sans:** Inter (variable) - UI, navegación, cuerpo de texto
 - **Serif:** Lora (variable) - Títulos, énfasis editorial
 
-### Clases de Utilidad
+### Clases de Utilidad (Tailwind v4)
 ```css
 .text-micro        /* Texto pequeño uppercase para etiquetas */
 .font-sans         /* Inter */
@@ -142,7 +144,7 @@ pao-alpha/
 # Instalación de dependencias
 npm install
 
-# Desarrollo local (Turbopack)
+# Desarrollo local (Turbopack habilitado por defecto en Next.js 16)
 npm run dev
 # http://localhost:3000
 
@@ -252,7 +254,13 @@ Texto del artículo aquí...
 1. Crear archivo `.md` en `content/biblioteca-personal/` o `content/biblioteca-corporativa/`
 2. Incluir frontmatter con todos los campos requeridos
 3. El slug se genera automáticamente desde el nombre del archivo
-4. No requiere reiniciar el servidor (hot reload)
+4. Requiere reiniciar el servidor para ver cambios (lectura en build time)
+
+### Funciones Utilitarias (lib/mdx.ts)
+- `getAllArticles(silo)` - Lista todos los artículos de un silo
+- `getArticleBySlug(silo, slug)` - Obtiene un artículo con contenido HTML
+- `generateArticleParams(silo)` - Genera parámetros para rutas estáticas
+- `articleExists(silo, slug)` - Verifica existencia de artículo
 
 ---
 
@@ -304,7 +312,7 @@ export const FEATURE_FLAGS = {
 
 ### WhatsApp Business
 - Configuración centralizada en `WHATSAPP_CONFIG`
-- Mensajes predefinidos por contexto (default, b2b, mentoring, etc.)
+- Mensajes predefinidos por contexto (default, b2b, mentoring, tarot, workshop)
 - Botón flotante en todas las páginas B2C
 - **Nota importante:** Solo mensajes de texto, no se atienden llamadas
 
@@ -318,7 +326,40 @@ export const FEATURE_FLAGS = {
 
 ---
 
-## 12. Checklist para Nuevos Features
+## 12. Testing
+
+**Nota:** El proyecto actualmente no tiene framework de testing configurado.
+
+Para implementar tests, se recomienda:
+- **Unit tests:** Vitest o Jest
+- **E2E tests:** Playwright
+- **Component tests:** Testing Library + Vitest
+
+### Script de Prueba de Seguridad
+Existe `scripts/test-hmac.js` para probar la validación HMAC de webhooks:
+```bash
+node scripts/test-hmac.js
+```
+
+---
+
+## 13. Despliegue
+
+### Configuración Recomendada
+- **Plataforma:** Cloudflare Pages (optimizado para Next.js)
+- **Build command:** `npm run build`
+- **Build output:** `.next`
+- **Node version:** 18.x o superior
+
+### Preparación para Deploy
+1. Configurar variables de entorno en el panel del hosting
+2. Verificar que `NEXT_PUBLIC_*` variables estén seteadas
+3. Ejecutar build local para verificar: `npm run build`
+4. Revisar que no haya errores de lint: `npm run lint`
+
+---
+
+## 14. Checklist para Nuevos Features
 
 Antes de implementar un nuevo feature:
 
@@ -332,12 +373,36 @@ Antes de implementar un nuevo feature:
 
 ---
 
-## 13. Contacto y Referencias
+## 15. Troubleshooting Común
+
+### Problemas con Tailwind v4
+```bash
+rm -rf .next && npm run dev
+```
+
+### Cambios en content no se reflejan
+Los archivos Markdown se leen en build time. Reiniciar el servidor:
+```bash
+# Detener y volver a iniciar
+npm run dev
+```
+
+### Error de reCAPTCHA
+- Verificar que `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` esté configurado
+- Verificar dominio en consola de Google reCAPTCHA
+
+### Error de fuentes
+Las fuentes se cargan via `next/font` en `app/layout.tsx`. No requieren configuración adicional.
+
+---
+
+## 16. Contacto y Referencias
 
 - **WhatsApp:** +569 99396166
 - **Email:** paorioseco@gmail.com
 - **YouTube:** @paolarioseco
 - **LinkedIn:** linkedin.com/in/paolarioseco
+- **Cal.com:** https://cal.com/paola-rioseco/intro
 - **Desarrollado por:** sint.cl
 
 ### Recursos Externos
@@ -347,7 +412,7 @@ Antes de implementar un nuevo feature:
 
 ---
 
-## 14. Notas para Agentes de IA
+## 17. Notas para Agentes de IA
 
 ### Al Modificar Código
 1. **Mantén consistencia:** Siempre verifica el estilo existente en archivos cercanos
@@ -367,11 +432,8 @@ Antes de implementar un nuevo feature:
 3. Checkbox de privacidad desmarcado por defecto
 4. Estados de loading y feedback visual
 
-### Debugging Común
-```bash
-# Si hay problemas con Tailwind v4
-rm -rf .next && npm run dev
-
-# Si los cambios en content no se reflejan
-# Reiniciar servidor (gray-matter lee en build time)
-```
+### Al Agregar Contenido
+1. Usar guiones en nombres de archivo (kebab-case)
+2. Fecha en formato ISO: `YYYY-MM-DD`
+3. Incluir todos los campos del frontmatter
+4. Testear el renderizado antes de finalizar
