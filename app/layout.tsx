@@ -17,9 +17,13 @@ export const metadata: Metadata = {
   title: "Paola Rioseco | Vida Consciente",
   description: "Conocimiento para la transformación personal.",
   icons: {
-    icon: "/isotipo.png",
+    icon: [
+      { url: "/isotipo.png", type: "image/png" }
+    ],
     shortcut: "/isotipo.png",
-    apple: "/isotipo.png",
+    apple: [
+      { url: "/isotipo.png", type: "image/png" }
+    ],
   },
 };
 
