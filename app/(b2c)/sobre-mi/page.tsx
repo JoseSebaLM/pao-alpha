@@ -1,30 +1,35 @@
 import Image from "next/image";
 import { Metadata } from "next";
 import YouTubeEmbed from "@/components/content/YouTubeEmbed";
+import Testimonials from "@/components/b2c/Testimonials";
 
 export const metadata: Metadata = {
   title: "Sobre Mí | Paola Rioseco",
   description: "Conoce a Paola Rioseco, especialista en transformación emocional y claridad interna. Descubre su metodología para transitar hacia una vida consciente.",
 };
 
-// Datos de apariciones en medios (fácilmente extensible)
-const mediaAppearances = [
+// Datos de apariciones en medios
+const VIDEOS_DATA = [
   {
-    videoId: "dQw4w9WgXcQ",
-    title: "Entrevista: Transformación Emocional",
+    videoId: "G8XEcK105uk",
+    title: "Conferencia sobre el Miedo. Calgary, Canadá",
+    description: "Exploración profunda sobre cómo el miedo paraliza y las herramientas prácticas para transformarlo en un motor de cambio."
   },
   {
-    videoId: "dQw4w9WgXcQ",
-    title: "Gestión del Miedo en Contextos de Alta Exigencia",
+    videoId: "Cdh8udDZ9X4",
+    title: "La importancia del verbo",
+    description: "El impacto de nuestras palabras en la creación de nuestra realidad y cómo aprender a comunicarnos desde la consciencia."
   },
   {
-    videoId: "dQw4w9WgXcQ",
-    title: "El Orden Mental como Herramienta de Vida",
+    videoId: "hPkA8HfAXto",
+    title: "7 Principios del Universo",
+    description: "Un recorrido por las leyes universales que rigen nuestra existencia y cómo alinearnos con ellas para fluir en coherencia."
   },
   {
-    videoId: "dQw4w9WgXcQ",
-    title: "Conversaciones sobre Consciencia y Coherencia",
-  },
+    videoId: "132owakqDE0",
+    title: "Cómo enfrentar los conflictos desde la serenidad",
+    description: "Estrategias de regulación emocional para abordar los desafíos interpersonales diarios sin perder nuestro centro de paz."
+  }
 ];
 
 export default function SobreMiPage() {
@@ -72,15 +77,19 @@ export default function SobreMiPage() {
                 prose-strong:text-ink prose-strong:font-medium
                 prose-a:text-primary prose-a:underline prose-a:underline-offset-4 prose-a:decoration-primary/30 hover:prose-a:decoration-primary">
                 <p>
-                  Soy Consultora en Desarrollo Humano, Especialista en Gestión Emocional, escritora y conferencista. Tras años de profundo estudio de la conducta humana y los procesos emocionales, mi propósito es acompañar a líderes empresariales, equipos de trabajo y personas a transitar del automatismo a la eficiencia consciente.
+                  Soy Consultora en Desarrollo Humano y Gestión Emocional, escritora y conferencista.
                 </p>
 
                 <p>
-                  A través de mis programas y el Método Expansivo de Autoconocimiento, mi objetivo central es facilitar resultados sólidos y sostenibles en el menor tiempo posible. Acompaño a las personas a desenmascarar sus bloqueos y potenciar sus talentos innatos a partir de procesos prácticos, fundamentados en cinco pilares innegociables: auto-respeto, auto-cuidado, auto-valoración, auto-conocimiento y auto-liderazgo.
+                  Mi propósito es acompañar a personas, líderes y organizaciones a transitar desde la reacción automática hacia una verdadera eficiencia consciente.
                 </p>
 
                 <p>
-                  Durante este proceso, mis clientes y alumnos experimentan una clarificación profunda de las emociones, automatismos y creencias preestablecidas que han estancado su desarrollo. Al desactivar estos patrones de desgaste, se genera una comprensión auténtica de sí mismos, permitiéndoles erradicar el victimismo y recuperar, de manera definitiva, su soberanía consciente y su poder emocional.
+                  A través de mis programas y el Método Expansivo de Autoconocimiento, facilito resultados sostenibles en el menor tiempo posible. Te acompaño a desenmascarar bloqueos y potenciar tus talentos a partir de procesos prácticos, fundamentados en cinco pilares innegociables: auto-respeto, auto-cuidado, auto-valoración, auto-conocimiento y auto-liderazgo.
+                </p>
+
+                <p>
+                  Mi compromiso es entregar verdad, no consuelo. Al desactivar los patrones de desgaste emocional, mis clientes experimentan una clarificación profunda que les permite erradicar el victimismo, fortalecer la toma de decisiones y recuperar, de manera definitiva, su soberanía consciente y su seguridad psicológica.
                 </p>
               </div>
             </div>
@@ -108,18 +117,24 @@ export default function SobreMiPage() {
           </p>
 
           {/* Grilla responsive de videos */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {mediaAppearances.map((video, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {VIDEOS_DATA.map((video, index) => (
               <div key={index} className="group">
                 <YouTubeEmbed videoId={video.videoId} title={video.title} />
-                <h3 className="font-sans text-sm text-muted mt-3 group-hover:text-primary transition-colors">
+                <h3 className="font-serif text-xl font-bold text-ink mt-5 mb-2">
                   {video.title}
                 </h3>
+                <p className="font-sans text-sm text-muted leading-relaxed">
+                  {video.description}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Testimonios */}
+      <Testimonials />
     </main>
   );
 }

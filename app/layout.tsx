@@ -16,6 +16,11 @@ const lora = Lora({
 export const metadata: Metadata = {
   title: "Paola Rioseco | Vida Consciente",
   description: "Conocimiento para la transformación personal.",
+  icons: {
+    icon: "/isotipo.png",
+    shortcut: "/isotipo.png",
+    apple: "/isotipo.png",
+  },
 };
 
 export default function RootLayout({

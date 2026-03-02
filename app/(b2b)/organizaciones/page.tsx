@@ -3,6 +3,7 @@ import Image from "next/image";
 import { WHATSAPP_CONFIG } from "@/lib/config";
 import CorporateForm from "@/components/b2b/CorporateForm";
 import FloatingWhatsApp from "@/components/b2c/FloatingWhatsApp";
+import Testimonials from "@/components/b2c/Testimonials";
 
 export default function OrganizacionesPage() {
   const isB2BEnabled = process.env.NEXT_PUBLIC_ENABLE_B2B === 'true';
@@ -56,26 +57,8 @@ export default function OrganizacionesPage() {
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4 md:px-8 bg-stone-100">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div>
-              {/* Foto de Paola - Rectangular con esquinas redondeadas */}
-              <div className="mb-6">
-                <div className="w-28 h-36 rounded-2xl overflow-hidden shadow-lg">
-                  <Image
-                    src="/paola.jpg"
-                    alt="Paola Rioseco"
-                    width={112}
-                    height={144}
-                    className="w-full h-full object-cover object-top"
-                    priority
-                  />
-                </div>
-              </div>
-
-              {/* Nombre y cargo compacto */}
-              <p className="font-serif text-primary font-semibold text-lg mb-1">Paola Rioseco</p>
-              <p className="text-sm text-muted mb-6">Consultora en Desarrollo Humano y Gestión Emocional</p>
-              
               {/* Título Principal - Más prominente */}
               <h1 className="font-serif text-4xl md:text-[2.5rem] text-ink mb-6 leading-[1.15]">
                 Gestión del Miedo Corporativo:<br className="hidden md:block" /> Claridad Estratégica y Resiliencia bajo Alta Exigencia
@@ -85,6 +68,24 @@ export default function OrganizacionesPage() {
               <p className="text-lg text-muted leading-relaxed">
                 Desactivamos los bloqueos frente a la incertidumbre y el error. Dotamos a líderes y equipos de herramientas de regulación interna para optimizar la toma de decisiones, consolidando la seguridad psicológica y transformando los desafíos en resiliencia operativa.
               </p>
+
+              {/* Badge de Autoridad - Firma horizontal */}
+              <div className="flex items-center gap-4 mt-8">
+                <div className="w-20 h-20 rounded-full overflow-hidden shadow-lg shrink-0">
+                  <Image
+                    src="/paola.jpg"
+                    alt="Paola Rioseco"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover object-[center_15%]"
+                    priority
+                  />
+                </div>
+                <div>
+                  <p className="text-primary font-bold font-serif text-xl">Paola Rioseco</p>
+                  <p className="text-base text-muted">Consultora en Desarrollo Humano y Gestión Emocional</p>
+                </div>
+              </div>
             </div>
             <div id="contacto" className="bg-white rounded-2xl p-8 border border-ink/10 shadow-sm scroll-mt-24">
               <CorporateForm />
@@ -107,7 +108,7 @@ export default function OrganizacionesPage() {
               <div className="text-3xl mb-4">🛡️</div>
               <h3 className="font-serif text-xl text-ink mb-3">Seguridad Psicológica</h3>
               <p className="text-muted text-sm leading-relaxed flex-grow">
-                Consolida un entorno donde los colaboradores operen libres del miedo al error, fortaleciendo la cohesión de equipos y la claridad mental para una óptima toma de decisiones.
+                Eliminamos el miedo al error para fortalecer la cohesión y la claridad mental, permitiendo que el equipo tome decisiones estratégicas con total confianza.
               </p>
               <a
                 href={WHATSAPP_CONFIG.getLinkWithText("b2b")}
@@ -126,7 +127,7 @@ export default function OrganizacionesPage() {
               <div className="text-3xl mb-4">⚡</div>
               <h3 className="font-serif text-xl text-ink mb-3">Resiliencia Operativa</h3>
               <p className="text-muted text-sm leading-relaxed flex-grow">
-                Dota a tu organización de la capacidad para sostener el rendimiento ante contextos de alta exigencia. Mediante la regulación emocional, la presión se transforma en un motor para el bienestar organizacional.
+                Transformamos la presión en un motor de bienestar mediante la regulación emocional, asegurando un alto rendimiento sostenido incluso bajo condiciones de máxima exigencia.
               </p>
               <a
                 href={`https://wa.me/${WHATSAPP_CONFIG.number}?text=${encodeURIComponent("Hola Paola, quiero desarrollar Resiliencia Operativa en mi equipo para sostener el rendimiento ante la alta exigencia. ¿Podemos conversar sobre una intervención a medida?")}`}
@@ -145,7 +146,7 @@ export default function OrganizacionesPage() {
               <div className="text-3xl mb-4">⚠️</div>
               <h3 className="font-serif text-xl text-ink mb-3">Riesgo Psicosocial</h3>
               <p className="text-muted text-sm leading-relaxed flex-grow">
-                Mitiga la sobrecarga y los automatismos emocionales que desgastan a líderes y equipos. Una adecuada gestión de riesgo psicosocial previene los conflictos interpersonales y asegura un clima laboral productivo.
+                Mitigamos la sobrecarga y el desgaste para prevenir conflictos internos, protegiendo el clima laboral y transformando el estrés en una productividad sana y sostenible.
               </p>
               <a
                 href={`https://wa.me/${WHATSAPP_CONFIG.number}?text=${encodeURIComponent("Hola Paola, necesito evaluar y mitigar los Riesgos Psicosociales en mi organización. Me interesa conocer cómo puede ayudarme a cumplir con la normativa y proteger a mi equipo.")}`}
@@ -231,10 +232,7 @@ export default function OrganizacionesPage() {
                   rel="noopener noreferrer"
                   className="text-sm font-medium text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
                 >
-                  Consultar por Programas
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+                  Consultar por este formato →
                 </a>
               </div>
 
@@ -252,10 +250,7 @@ export default function OrganizacionesPage() {
                   rel="noopener noreferrer"
                   className="text-sm font-medium text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
                 >
-                  Consultar para Instituciones Educativas
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+                  Consultar por este formato →
                 </a>
               </div>
 
@@ -273,10 +268,7 @@ export default function OrganizacionesPage() {
                   rel="noopener noreferrer"
                   className="text-sm font-medium text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
                 >
-                  Consultar por Consultoría Estratégica
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+                  Consultar por este formato →
                 </a>
               </div>
             </div>
@@ -311,6 +303,8 @@ export default function OrganizacionesPage() {
           </p>
         </div>
       </section>
+
+      <Testimonials />
 
       <FloatingWhatsApp context="b2b" />
     </main>

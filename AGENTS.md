@@ -30,7 +30,7 @@
 | Next.js | 16.1.6 | Framework principal con App Router |
 | React | 19.2.3 | UI Library |
 | TypeScript | 5.x | Tipado estático |
-| Tailwind CSS | 4.x | Estilos (nuevo sistema `@theme` en `globals.css`) |
+| Tailwind CSS | 4.x | Estilos (sistema `@theme` en `globals.css`) |
 
 ### UI/UX
 - **Framer Motion** ^12.33.0 - Micro-interacciones y animaciones

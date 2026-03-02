@@ -123,7 +123,7 @@ export default function ServiciosPage() {
                   <Sparkles className="w-10 h-10 text-mente" />
                 </div>
                 <p className="font-serif text-xl text-ink/60">
-                  "El encuentro contigo mismo es el inicio de todo cambio"
+                  &ldquo;El encuentro contigo mismo es el inicio de todo cambio&rdquo;
                 </p>
               </div>
             </div>

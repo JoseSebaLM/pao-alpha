@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ContactSection from "@/components/b2c/ContactSection";
+import Testimonials from "@/components/b2c/Testimonials";
 
 // Fases del programa Clases de Vida Consciente
 const fasesPrograma = [
@@ -22,28 +23,27 @@ const fasesPrograma = [
   {
     numero: "04",
     titulo: "Relaciones Conscientes",
-    subtitulo: "(principio de correspondencia)",
-    descripcion: "Aplicar el 'como es adentro, es afuera' para transformar tus vínculos.",
+    descripcion: "Aplicar el principio de correspondencia (como es adentro, es afuera) para transformar tus vínculos.",
   },
 ];
 
-// Bullets de Fricción Comercial en Lenguaje Positivo (BRAND-002)
+// Para quién es este espacio
 const fricciones = [
   {
-    titulo: "Quienes buscan claridad y orden mental",
-    descripcion: "Personas dispuestas a utilizar herramientas de diagnóstico para el autoconocimiento profundo y la toma de decisiones basada en la realidad, soltando la ilusión de predecir el futuro.",
+    titulo: "Personas que buscan claridad y orden mental",
+    descripcion: "Dispuestas a utilizar el autoconocimiento profundo para tomar decisiones asertivas, construyendo su vida desde el presente.",
   },
   {
-    titulo: "Quienes asumen su Responsabilidad Radical",
-    descripcion: "Personas listas para operar bajo la innegable Ley de Causa y Efecto, tomando las riendas de sus actos y reconociéndose como creadores activos de su realidad, lejos de la queja.",
+    titulo: "Personas que asumen su Responsabilidad Radical",
+    descripcion: "Creadores activos de su realidad que operan bajo la Ley de Causa y Efecto, tomando las riendas de su camino con total convicción.",
   },
   {
-    titulo: "Quienes eligen la soberanía consciente",
-    descripcion: 'Personas comprometidas con recuperar su poder interno y total autonomía emocional. Este es un espacio donde se entrega "verdad, no consuelo" para impulsar tu independencia absoluta.',
+    titulo: "Personas que eligen la Vida Consciente",
+    descripcion: 'Comprometidas con su autonomía emocional. Un espacio de "verdad, no consuelo" diseñado para impulsar tu independencia absoluta.',
   },
   {
-    titulo: "Quienes están dispuestos al trabajo interno",
-    descripcion: "Personas valientes, listas para salir de su zona conocida, observar sus áreas de mejora con honestidad y accionar de forma pragmática para crear una verdadera transformación.",
+    titulo: "Personas dispuestas al trabajo interno",
+    descripcion: "Estudiantes valientes y pragmáticos, que expanden sus límites con honestidad hacia una transformación genuina.",
   },
 ];
 
@@ -146,19 +146,17 @@ export default function PersonasPage() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Imagen/Visual */}
             <div className="order-2 md:order-1">
-              <div className="relative aspect-square rounded-2xl overflow-hidden shadow-lg bg-espíritu/5 flex items-center justify-center">
-                <div className="text-center p-8">
-                  <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-espíritu/10 flex items-center justify-center">
-                    <svg className="w-12 h-12 text-espíritu" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                  </div>
-                  <p className="font-serif text-xl text-ink/60 italic">
-                    "Ver con claridad lo que otros no se atreven a mirar"
-                  </p>
-                </div>
+              <div className="relative aspect-square rounded-2xl overflow-hidden shadow-lg">
+                <Image
+                  src="/paola.jpg"
+                  alt="Paola Rioseco - Lectura de Alma"
+                  fill
+                  className="object-cover object-top"
+                />
               </div>
+              <p className="font-serif text-xl text-ink/60 italic text-center mt-6">
+                &ldquo;Ver con claridad lo que otros no se atreven a mirar&rdquo;
+              </p>
             </div>
 
             {/* Contenido texto */}
@@ -173,13 +171,13 @@ export default function PersonasPage() {
               
               <div className="space-y-4 text-ink/80 text-lg leading-relaxed">
                 <p>
-                  Una radiografía profunda de tus automatismos y tu estado actual. Este servicio traduce tu confusión e incertidumbre en una comprensión directa y aplicable.
+                  Transforma el ruido interno en una comprensión simple y aplicable. Esta radiografía profunda de tu estado actual te permite desactivar automatismos y recuperar tu soberanía consciente.
                 </p>
                 <p>
-                  Te entrega la claridad operativa exacta para identificar dónde estás cediendo tu poder y cómo el principio de correspondencia está manifestando tus conflictos actuales.
+                  Obtén la claridad exacta para entender cómo el principio de correspondencia está moldeando tu realidad y descubre el camino directo para retomar tu poder personal.
                 </p>
                 <p className="text-ink font-medium italic">
-                  No es un espacio para escuchar lo que quieres oír, sino un espejo para ver con lucidez lo que necesitas resolver.
+                  Un espejo de lucidez y verdad, diseñado para quienes están dispuestos a liderar su camino desde una responsabilidad radical.
                 </p>
               </div>
 
@@ -215,11 +213,11 @@ export default function PersonasPage() {
             </div>
             
             <h2 className="font-serif text-3xl md:text-4xl mb-4">
-              Para quién ES este espacio
+              Para quién es este espacio
             </h2>
             
             <p className="text-white/60 text-lg">
-              Este trabajo es para quienes están listos para asumir su poder
+              Este trabajo es para quienes están listos para asumir su poder:
             </p>
           </div>
 
@@ -241,12 +239,7 @@ export default function PersonasPage() {
             ))}
           </div>
 
-          {/* Nota de cierre */}
-          <div className="mt-12 text-center">
-            <p className="text-white/40 text-sm italic">
-              "Si te resonates con estas palabras, estás listo para comenzar."
-            </p>
-          </div>
+
         </div>
       </section>
 
@@ -254,6 +247,11 @@ export default function PersonasPage() {
           SECCIÓN DE CONTACTO
           ============================================ */}
       <ContactSection />
+
+      {/* ============================================
+          TESTIMONIOS
+          ============================================ */}
+      <Testimonials />
     </div>
   );
 }

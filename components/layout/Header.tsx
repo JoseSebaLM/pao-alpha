@@ -3,18 +3,34 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
-const navLinks = [
+// Menú para páginas generales (Inicio, Sobre Mi, Organizaciones)
+const navLinksDefault = [
   { href: "/organizaciones", label: "Organizaciones" },
   { href: "/personas", label: "Personas" },
   { href: "/sobre-mi", label: "Sobre Mi" },
+  { href: "/", label: "Inicio" },
+];
+
+// Menú para sección Personas
+const navLinksPersonas = [
+  { href: "/personas", label: "Personas" },
+  { href: "/personas/biblioteca", label: "Biblioteca" },
+  { href: "/sobre-mi", label: "Sobre Mi" },
+  { href: "/", label: "Inicio" },
 ];
 
 export default function Header() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Detectar si estamos en la sección de personas
+  const isPersonasSection = pathname?.startsWith("/personas");
+  const navLinks = isPersonasSection ? navLinksPersonas : navLinksDefault;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,9 +88,7 @@ export default function Header() {
           {/* Desktop Contact Button */}
           <div className="hidden md:block">
             <Link
-              href="https://wa.me/56999396166"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/contacto"
               className="inline-flex items-center px-6 py-2.5 bg-primary text-white font-sans text-sm font-medium rounded-full hover:bg-primary/90 transition-colors duration-200"
             >
               Contacto
@@ -141,9 +155,7 @@ export default function Header() {
                   className="mt-4 pt-4 border-t border-ink/10"
                 >
                   <Link
-                    href="https://wa.me/56999396166"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="/contacto"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="block py-3 px-4 text-center bg-primary text-white font-sans text-base font-medium rounded-full hover:bg-primary/90 transition-colors duration-200"
                   >
