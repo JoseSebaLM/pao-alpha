@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Artículos sobre consciencia, coherencia y bienestar.",
 };
 
-export default function BibliotecaPage() {
+export default async function BibliotecaPage() {
   const articles = getAllArticles("biblioteca-personal");
   
   return (

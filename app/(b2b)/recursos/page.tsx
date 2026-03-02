@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Artículos sobre seguridad psicológica, resiliencia operativa y gestión del riesgo psicosocial en organizaciones.",
 };
 
-export default function BibliotecaCorporativaPage() {
+export default async function BibliotecaCorporativaPage() {
   const articles = getAllArticles("biblioteca-corporativa");
   
   return (
