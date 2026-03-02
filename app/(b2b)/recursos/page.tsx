@@ -27,51 +27,44 @@ export default function BibliotecaCorporativaPage() {
 
       {/* Grid de artículos */}
       <section className="px-4 md:px-8 pb-24 max-w-5xl mx-auto">
-        {articles.length === 0 ? (
-          <div className="text-center py-20 bg-stone-50 rounded-2xl border border-ink/10">
-            <p className="text-muted font-sans">No hay publicaciones disponibles en este momento.</p>
-            <p className="text-sm text-muted/60 mt-2">Próximamente contenido especializado.</p>
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 gap-6">
-            {articles.map((article) => (
-              <Link
-                key={article.slug}
-                href={`/recursos/${article.slug}`}
-                className="group block p-6 border border-ink/10 rounded-2xl hover:border-primary hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 bg-white"
-              >
-                {/* Categoría y tiempo */}
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
-                    {article.category}
-                  </span>
-                  <span className="text-xs text-muted/60">
-                    {article.readTime}
-                  </span>
-                </div>
-                
-                {/* Título */}
-                <h2 className="font-serif text-xl text-ink mb-3 group-hover:text-primary transition-colors">
-                  {article.title}
-                </h2>
-                
-                {/* Extracto */}
-                <p className="text-sm text-muted font-sans leading-relaxed mb-4 line-clamp-3">
-                  {article.excerpt}
-                </p>
-                
-                {/* Fecha */}
-                <time className="text-xs text-muted/50">
-                  {new Date(article.date).toLocaleDateString('es-ES', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </time>
-              </Link>
-            ))}
-          </div>
-        )}
+        <div className="grid md:grid-cols-2 gap-6">
+          {articles.map((article) => (
+            <Link
+              key={article.slug}
+              href={`/recursos/${article.slug}`}
+              className="group block p-6 border border-ink/10 rounded-2xl hover:border-primary hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 bg-white"
+            >
+              {/* Categoría y tiempo */}
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
+                  {article.category}
+                </span>
+                <span className="text-xs text-muted/60">
+                  {article.readTime}
+                </span>
+              </div>
+              
+              {/* Título */}
+              <h2 className="font-serif text-xl text-ink mb-3 group-hover:text-primary transition-colors">
+                {article.title}
+              </h2>
+              
+              {/* Extracto */}
+              <p className="text-sm text-muted font-sans leading-relaxed mb-4 line-clamp-3">
+                {article.excerpt}
+              </p>
+              
+              {/* Fecha */}
+              <time className="text-xs text-muted/50">
+                {new Date(article.date).toLocaleDateString('es-ES', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </time>
+            </Link>
+          ))}
+        </div>
       </section>
 
       {/* CTA a contacto */}
