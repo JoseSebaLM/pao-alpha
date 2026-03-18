@@ -53,7 +53,7 @@ export default function SobreMiPage() {
             <div className="order-1">
               <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
                 <Image
-                  src="/paola.jpg"
+                  src="/Pao 1.png"
                   alt="Paola Rioseco"
                   fill
                   className="object-cover"
@@ -81,15 +81,11 @@ export default function SobreMiPage() {
                 </p>
 
                 <p>
-                  Mi propósito es acompañar a personas, líderes y organizaciones a transitar desde la reacción automática hacia una verdadera eficiencia consciente.
+                  A través de mis programas y el Método Expansivo de Autoconocimiento, facilito resultados sostenibles en el menor tiempo posible. Contribuyo a desenmascarar bloqueos y potenciar talentos a partir de procesos prácticos, fundamentados en cinco pilares innegociables: auto-respeto, auto-cuidado, auto-valoración, auto-conocimiento y auto-liderazgo.
                 </p>
 
                 <p>
-                  A través de mis programas y el Método Expansivo de Autoconocimiento, facilito resultados sostenibles en el menor tiempo posible. Te acompaño a desenmascarar bloqueos y potenciar tus talentos a partir de procesos prácticos, fundamentados en cinco pilares innegociables: auto-respeto, auto-cuidado, auto-valoración, auto-conocimiento y auto-liderazgo.
-                </p>
-
-                <p>
-                  Mi compromiso es entregar verdad, no consuelo. Al desactivar los patrones de desgaste emocional, mis clientes experimentan una clarificación profunda que les permite erradicar el victimismo, fortalecer la toma de decisiones y recuperar, de manera definitiva, su soberanía consciente y su seguridad psicológica.
+                  No hago terapias, sino clases de vida consciente respetando el libre albedrío individual. Al desactivar los patrones de desgaste emocional, los alumnos experimentan una clarificación profunda que les permite erradicar el victimismo, fortalecer la toma de decisiones y recuperar, de manera definitiva, su soberanía consciente y su seguridad psicológica.
                 </p>
               </div>
             </div>
