@@ -130,9 +130,7 @@ export default function OrganizacionesPage() {
                 Transformamos la presión en un motor de bienestar mediante la regulación emocional, asegurando un alto rendimiento sostenido incluso bajo condiciones de máxima exigencia.
               </p>
               <a
-                href={`https://wa.me/${WHATSAPP_CONFIG.number}?text=${encodeURIComponent("Hola Paola, quiero desarrollar Resiliencia Operativa en mi equipo para sostener el rendimiento ante la alta exigencia. ¿Podemos conversar sobre una intervención a medida?")}`}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/contacto"
                 className="mt-4 text-sm font-medium text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
               >
                 Consultar por Resiliencia Operativa
@@ -149,9 +147,7 @@ export default function OrganizacionesPage() {
                 Mitigamos la sobrecarga y el desgaste para prevenir conflictos internos, protegiendo el clima laboral y transformando el estrés en una productividad sana y sostenible.
               </p>
               <a
-                href={`https://wa.me/${WHATSAPP_CONFIG.number}?text=${encodeURIComponent("Hola Paola, necesito evaluar y mitigar los Riesgos Psicosociales en mi organización. Me interesa conocer cómo puede ayudarme a cumplir con la normativa y proteger a mi equipo.")}`}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/contacto"
                 className="mt-4 text-sm font-medium text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
               >
                 Consultar por Riesgos Psicosociales
@@ -227,9 +223,7 @@ export default function OrganizacionesPage() {
                 <h4 className="font-medium text-ink mb-2">Programas Organizacionales</h4>
                 <p className="text-sm text-muted mb-4">Talleres y charlas enfocados en la gestión emocional y comunicación consciente para equipos corporativos.</p>
                 <a
-                  href={`https://wa.me/${WHATSAPP_CONFIG.number}?text=${encodeURIComponent("Hola Paola, me interesan los Programas Organizacionales para mi equipo. Quiero conocer más sobre los talleres de gestión emocional y comunicación consciente.")}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/contacto"
                   className="text-sm font-medium text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
                 >
                   Consultar por este formato →
@@ -245,9 +239,7 @@ export default function OrganizacionesPage() {
                 <h4 className="font-medium text-ink mb-2">Soporte a Instituciones Educativas</h4>
                 <p className="text-sm text-muted mb-4">Programas de apoyo socioemocional para docentes y equipos directivos, orientados a la convivencia escolar.</p>
                 <a
-                  href={`https://wa.me/${WHATSAPP_CONFIG.number}?text=${encodeURIComponent("Hola Paola, represento a una institución educativa y necesito apoyo socioemocional para docentes. Me interesa fortalecer la convivencia escolar y el bienestar de nuestro equipo.")}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/contacto"
                   className="text-sm font-medium text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
                 >
                   Consultar por este formato →
@@ -263,9 +255,7 @@ export default function OrganizacionesPage() {
                 <h4 className="font-medium text-ink mb-2">Consultoría Estratégica</h4>
                 <p className="text-sm text-muted mb-4">Intervenciones profundas de acompañamiento para líderes en procesos de cambio institucional y alta exigencia.</p>
                 <a
-                  href={`https://wa.me/${WHATSAPP_CONFIG.number}?text=${encodeURIComponent("Hola Paola, soy líder en mi organización y necesito Consultoría Estratégica para navegar un proceso de cambio institucional. Busco acompañamiento personalizado de alto nivel.")}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/contacto"
                   className="text-sm font-medium text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
                 >
                   Consultar por este formato →
