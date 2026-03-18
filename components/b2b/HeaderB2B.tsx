@@ -10,7 +10,7 @@ import { WHATSAPP_CONFIG } from "@/lib/config";
 const navLinks = [
   { href: "/organizaciones", label: "Organizaciones" },
   { href: "/recursos", label: "Biblioteca" },
-  { href: "/sobre-mi", label: "Sobre Mi" },
+  { href: "/quien-soy", label: "Quien Soy" },
   { href: "/", label: "Inicio" },
 ];
 

@@ -44,7 +44,7 @@ Ink (Texto):       #1C1917
   │   ├── page.tsx          # Grid artículos + filtros
   │   └── [slug]/page.tsx   # Vista lectura artículo
   ├── /servicios            # Workshop Feb 26 + Mentoring
-  └── /sobre-mi             # Bio Paola
+  └── /quien-soy          # Quien Soy - Bio Paola
   
 /components
   ├── /layout

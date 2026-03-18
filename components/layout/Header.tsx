@@ -7,11 +7,11 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
-// Menú para páginas generales (Inicio, Sobre Mi, Organizaciones)
+// Menú para páginas generales (Inicio, Quien Soy, Organizaciones)
 const navLinksDefault = [
   { href: "/organizaciones", label: "Organizaciones" },
   { href: "/personas", label: "Personas" },
-  { href: "/sobre-mi", label: "Sobre Mi" },
+  { href: "/quien-soy", label: "Quien Soy" }
   { href: "/", label: "Inicio" },
 ];
 
@@ -19,7 +19,7 @@ const navLinksDefault = [
 const navLinksPersonas = [
   { href: "/personas", label: "Personas" },
   { href: "/personas/biblioteca", label: "Biblioteca" },
-  { href: "/sobre-mi", label: "Sobre Mi" },
+  { href: "/quien-soy", label: "Quien Soy" }
   { href: "/", label: "Inicio" },
 ];
 

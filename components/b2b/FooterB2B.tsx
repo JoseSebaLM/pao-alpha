@@ -7,7 +7,7 @@ import { Linkedin, Youtube, Mail } from "lucide-react";
 const navLinks = [
   { href: "/organizaciones", label: "Organizaciones" },
   { href: "/recursos", label: "Biblioteca" },
-  { href: "/sobre-mi", label: "Sobre Mi" },
+  { href: "/quien-soy", label: "Quien Soy" },
   { href: "/", label: "Inicio" },
 ];
 

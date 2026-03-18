@@ -4,7 +4,7 @@ import YouTubeEmbed from "@/components/content/YouTubeEmbed";
 import Testimonials from "@/components/b2c/Testimonials";
 
 export const metadata: Metadata = {
-  title: "Sobre Mí | Paola Rioseco",
+  title: "Quien Soy | Paola Rioseco",
   description: "Conoce a Paola Rioseco, especialista en transformación emocional y claridad interna. Descubre su metodología para transitar hacia una vida consciente.",
 };
 
@@ -41,7 +41,7 @@ export default function SobreMiPage() {
           Conoce a tu guía
         </span>
         <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-ink">
-          Sobre mí
+          Quien Soy
         </h1>
       </section>
 

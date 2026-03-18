@@ -2,7 +2,8 @@
 
 > Este archivo contiene información esencial para que agentes de IA comprendan y trabajen eficientemente en este proyecto.
 > **Proyecto:** Plataforma de "Conocimiento de Vida" para Paola Rioseco - mentora de autoconocimiento y transformación personal.
-> **Última actualización:** 2026-03-02
+> **Idioma principal:** Español para UI/contenido, Inglés para código
+> **Metodología:** SINT Stack (Glass Box Architecture)
 
 ---
 
@@ -13,7 +14,6 @@
 - **Arquitectura:** Knowledge-First Platform con división B2B (organizaciones) y B2C (personas)
 - **UX Driver:** Claridad Mental, Estructura, "Cero Ruido"
 - **Lenguaje Visual:** Editorial (Serif moderna + Sans geométrica)
-- **Metodología:** SINT Stack (Glass Box Architecture)
 
 ### Filosofía de Desarrollo
 - **K.I.S.S.** (Keep It Simple, Stupid)
@@ -47,6 +47,10 @@
 - **HMAC-SHA256** (Node.js crypto) - Validación de webhooks de pago
 - **Honeypot fields** - Protección adicional contra bots
 
+### Deploy (Cloudflare)
+- **@opennextjs/cloudflare** ^1.17.1 - Adaptador para Cloudflare Workers
+- **wrangler** ^4.69.0 - CLI de Cloudflare
+
 ---
 
 ## 3. Estructura de Directorios
@@ -58,35 +62,43 @@ pao-alpha/
 │   │   ├── layout.tsx           # Layout con HeaderB2B + FooterB2B
 │   │   ├── organizaciones/
 │   │   │   └── page.tsx         # Landing Gestión del Miedo Corporativo
-│   │   └── recursos/            # Biblioteca corporativa (feature flag)
+│   │   └── recursos/            # Biblioteca corporativa
 │   │       ├── page.tsx
 │   │       └── [slug]/page.tsx
 │   ├── (b2c)/                   # Route Group: B2C Personal
 │   │   ├── layout.tsx           # Layout con FooterB2C + FloatingWhatsApp
+│   │   ├── contacto/
+│   │   │   └── page.tsx
 │   │   ├── personas/
 │   │   │   ├── page.tsx         # Landing Acompañamiento Personal
 │   │   │   └── biblioteca/      # Biblioteca personal
 │   │   │       ├── page.tsx     # Grid de artículos
 │   │   │       └── [slug]/      # Vista de artículo individual
 │   │   ├── servicios/
-│   │   └── sobre-mi/
+│   │   │   └── page.tsx
+│   │   └── quien-soy/
+│   │       ├── layout.tsx
+│   │       └── page.tsx
 │   ├── api/                     # API Routes
 │   │   ├── verify-recaptcha/    # Validación reCAPTCHA v3
+│   │   │   └── route.ts
 │   │   └── webhooks/payment/    # Webhook con HMAC validation
+│   │       └── route.ts
 │   ├── globals.css              # Tailwind v4 config (@theme)
 │   ├── layout.tsx               # Root layout + fuentes
 │   ├── page.tsx                 # Home (Portal de Acceso - Silo Cero)
-│   └── not-found.tsx
+│   └── not-found.tsx            # Página 404 personalizada
 ├── components/
 │   ├── b2b/                     # Componentes B2B
 │   │   ├── CorporateForm.tsx    # Formulario con reCAPTCHA
-│   │   ├── HeaderB2B.tsx
-│   │   └── FooterB2B.tsx
+│   │   ├── FooterB2B.tsx
+│   │   └── HeaderB2B.tsx
 │   ├── b2c/                     # Componentes B2C
-│   │   ├── ContactForm.tsx
+│   │   ├── ContactForm.tsx      # Formulario con reCAPTCHA
 │   │   ├── ContactSection.tsx
 │   │   ├── FloatingWhatsApp.tsx # Widget flotante con advertencia
-│   │   └── FooterB2C.tsx
+│   │   ├── FooterB2C.tsx
+│   │   └── Testimonials.tsx
 │   ├── content/
 │   │   ├── ConceptCard.tsx      # Tarjeta de artículo reutilizable
 │   │   └── YouTubeEmbed.tsx     # Embed de videos de YouTube
@@ -110,9 +122,59 @@ pao-alpha/
 
 ---
 
-## 4. Sistema de Diseño
+## 4. Comandos de Desarrollo
 
-### Paleta de Colores
+```bash
+# Instalación de dependencias
+npm install
+
+# Desarrollo local (Turbopack habilitado por defecto en Next.js 16)
+npm run dev
+# http://localhost:3000
+
+# Build de producción (Next.js)
+npm run build
+
+# Iniciar servidor de producción
+npm run start
+
+# Linting
+npm run lint
+
+# Cloudflare (OpenNext)
+npm run preview      # Build + preview local
+npm run deploy       # Build + deploy a Cloudflare
+npm run upload       # Build + upload
+npm run cf-typegen   # Generar tipos de Cloudflare
+```
+
+---
+
+## 5. Variables de Entorno
+
+Crear archivo `.env.local` en la raíz:
+
+```env
+# Feature Flags
+NEXT_PUBLIC_ENABLE_B2B=true              # Activa sección B2B
+NEXT_PUBLIC_ENABLE_B2B_LIBRARY=true      # Activa biblioteca corporativa
+
+# Seguridad - Webhooks
+PAYMENT_WEBHOOK_SECRET=tu_secreto_aqui
+
+# reCAPTCHA v3 (PRIV-002)
+# Obtener claves en: https://www.google.com/recaptcha/admin
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_site_key
+RECAPTCHA_SECRET_KEY=your_secret_key
+```
+
+**Nota:** Las variables `NEXT_PUBLIC_*` también se configuran en `wrangler.jsonc` para deploy en Cloudflare.
+
+---
+
+## 6. Sistema de Diseño
+
+### Paleta de Colores (CSS Variables)
 ```css
 --color-primary:   #C01D65   /* Magenta - CTAs principal */
 --color-mente:     #273DA0   /* Azul */
@@ -134,48 +196,6 @@ pao-alpha/
 .font-serif        /* Lora */
 .bg-paper          /* Fondo crema */
 .text-ink          /* Texto oscuro */
-```
-
----
-
-## 5. Comandos de Desarrollo
-
-```bash
-# Instalación de dependencias
-npm install
-
-# Desarrollo local (Turbopack habilitado por defecto en Next.js 16)
-npm run dev
-# http://localhost:3000
-
-# Build de producción
-npm run build
-
-# Iniciar servidor de producción
-npm run start
-
-# Linting
-npm run lint
-```
-
----
-
-## 6. Variables de Entorno
-
-Crear archivo `.env.local` en la raíz:
-
-```env
-# Feature Flags
-NEXT_PUBLIC_ENABLE_B2B=true              # Activa sección B2B
-NEXT_PUBLIC_ENABLE_B2B_LIBRARY=false     # Activa biblioteca corporativa
-
-# Seguridad - Webhooks
-PAYMENT_WEBHOOK_SECRET=tu_secreto_aqui
-
-# reCAPTCHA v3 (PRIV-002)
-# Obtener claves en: https://www.google.com/recaptcha/admin
-NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_site_key
-RECAPTCHA_SECRET_KEY=your_secret_key
 ```
 
 ---
@@ -253,7 +273,9 @@ Texto del artículo aquí...
 ### Proceso para Agregar Contenido
 1. Crear archivo `.md` en `content/biblioteca-personal/` o `content/biblioteca-corporativa/`
 2. Incluir frontmatter con todos los campos requeridos
-3. El slug se genera automáticamente desde el nombre del archivo
+3. Agregar el slug a la lista correspondiente en `lib/mdx.ts`:
+   - `BIBLIOTECA_PERSONAL_SLUGS` para B2C
+   - `BIBLIOTECA_CORPORATIVA_SLUGS` para B2B
 4. Requiere reiniciar el servidor para ver cambios (lectura en build time)
 
 ### Funciones Utilitarias (lib/mdx.ts)
@@ -272,6 +294,7 @@ Texto del artículo aquí...
 - Acciones específicas por formulario:
   - `submit_contact_b2c`
   - `submit_contact_b2b`
+- Implementación en `lib/recaptcha.ts`
 
 ### Honeypot Fields
 - Campo oculto `name="website"` en formularios
@@ -286,6 +309,11 @@ Texto del artículo aquí...
 - Validación HMAC-SHA256 obligatoria
 - Sanitización de logs: NUNCA loggear payload completo
 - Comparación timing-safe para prevenir timing attacks
+
+### Script de Testing HMAC
+```bash
+node scripts/test-hmac.js
+```
 
 ---
 
@@ -311,9 +339,9 @@ export const FEATURE_FLAGS = {
 ## 11. Integraciones
 
 ### WhatsApp Business
-- Configuración centralizada en `WHATSAPP_CONFIG`
-- Mensajes predefinidos por contexto (default, b2b, mentoring, tarot, workshop)
-- Botón flotante en todas las páginas B2C
+- Configuración centralizada en `WHATSAPP_CONFIG` (`lib/config.ts`)
+- Mensajes predefinidos por contexto: `default`, `b2b`, `mentoring`, `tarot`, `workshop`
+- Botón flotante en todas las páginas B2C (`FloatingWhatsApp.tsx`)
 - **Nota importante:** Solo mensajes de texto, no se atienden llamadas
 
 ### Cal.com
@@ -345,17 +373,28 @@ node scripts/test-hmac.js
 
 ## 13. Despliegue
 
-### Configuración Recomendada
-- **Plataforma:** Cloudflare Pages (optimizado para Next.js)
-- **Build command:** `npm run build`
-- **Build output:** `.next`
-- **Node version:** 18.x o superior
+### Plataforma: Cloudflare Pages (con OpenNext)
+
+La aplicación usa `@opennextjs/cloudflare` para ejecutarse en Cloudflare Workers.
+
+### Configuración (`wrangler.jsonc`)
+```json
+{
+  "name": "pao-alpha",
+  "compatibility_date": "2025-09-27",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "NEXT_PUBLIC_ENABLE_B2B": "true",
+    "NEXT_PUBLIC_ENABLE_B2B_LIBRARY": "true"
+  }
+}
+```
 
 ### Preparación para Deploy
-1. Configurar variables de entorno en el panel del hosting
-2. Verificar que `NEXT_PUBLIC_*` variables estén seteadas
-3. Ejecutar build local para verificar: `npm run build`
-4. Revisar que no haya errores de lint: `npm run lint`
+1. Configurar variables de entorno en `wrangler.jsonc`
+2. Ejecutar build local para verificar: `npm run build`
+3. Revisar que no haya errores de lint: `npm run lint`
+4. Deploy: `npm run deploy`
 
 ---
 
@@ -369,7 +408,8 @@ Antes de implementar un nuevo feature:
 - [ ] ¿Los formularios respetan Ley 21.719 (checkbox privacidad desmarcado)?
 - [ ] ¿Se manejan estados de loading y error?
 - [ ] ¿Funciona en mobile (diseño responsive)?
-- [ ] ¿No hay hardcodeo de textos que deberían estar en config?
+- [ ] ¿No hay hardcodeo de textos que deberían estar en `lib/config.ts`?
+- [ ] ¿Las páginas nuevas usan metadata para SEO?
 
 ---
 
@@ -394,6 +434,10 @@ npm run dev
 ### Error de fuentes
 Las fuentes se cargan via `next/font` en `app/layout.tsx`. No requieren configuración adicional.
 
+### Error de Cloudflare/OpenNext
+- Verificar que `wrangler.jsonc` tenga `nodejs_compat` en flags
+- Ejecutar `npm run cf-typegen` para regenerar tipos
+
 ---
 
 ## 16. Contacto y Referencias
@@ -409,6 +453,7 @@ Las fuentes se cargan via `next/font` en `app/layout.tsx`. No requieren configur
 - [Tailwind CSS v4 Docs](https://tailwindcss.com/docs)
 - [Next.js App Router](https://nextjs.org/docs/app)
 - [Google reCAPTCHA Admin](https://www.google.com/recaptcha/admin)
+- [OpenNext Cloudflare](https://opennext.js.org/cloudflare)
 
 ---
 
@@ -429,11 +474,12 @@ Las fuentes se cargan via `next/font` en `app/layout.tsx`. No requieren configur
 ### Al Trabajar con Formularios
 1. Siempre incluye validación de reCAPTCHA v3
 2. Agrega campo honeypot `name="website"`
-3. Checkbox de privacidad desmarcado por defecto
+3. Checkbox de privacidad desmarcado por defecto (Ley 21.719)
 4. Estados de loading y feedback visual
 
 ### Al Agregar Contenido
 1. Usar guiones en nombres de archivo (kebab-case)
 2. Fecha en formato ISO: `YYYY-MM-DD`
 3. Incluir todos los campos del frontmatter
-4. Testear el renderizado antes de finalizar
+4. Agregar el slug a la lista correspondiente en `lib/mdx.ts`
+5. Testear el renderizado antes de finalizar
