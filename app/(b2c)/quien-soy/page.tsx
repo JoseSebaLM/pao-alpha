@@ -53,7 +53,7 @@ export default function SobreMiPage() {
             <div className="order-1">
               <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
                 <Image
-                  src="/Pao 1.png"
+                  src="/pao-1.png"
                   alt="Paola Rioseco"
                   fill
                   className="object-cover"
@@ -72,21 +72,10 @@ export default function SobreMiPage() {
                 Paola Rioseco
               </h2>
 
-              <div className="prose prose-lg max-w-none
-                prose-p:text-muted prose-p:font-sans prose-p:leading-relaxed prose-p:mb-5
-                prose-strong:text-ink prose-strong:font-medium
-                prose-a:text-primary prose-a:underline prose-a:underline-offset-4 prose-a:decoration-primary/30 hover:prose-a:decoration-primary">
-                <p>
-                  Soy Consultora en Desarrollo Humano y Gestión Emocional, escritora y conferencista.
-                </p>
-
-                <p>
-                  A través de mis programas y el Método Expansivo de Autoconocimiento, facilito resultados sostenibles en el menor tiempo posible. Contribuyo a desenmascarar bloqueos y potenciar talentos a partir de procesos prácticos, fundamentados en cinco pilares innegociables: auto-respeto, auto-cuidado, auto-valoración, auto-conocimiento y auto-liderazgo.
-                </p>
-
-                <p>
-                  No hago terapias, sino clases de vida consciente respetando el libre albedrío individual. Al desactivar los patrones de desgaste emocional, los alumnos experimentan una clarificación profunda que les permite erradicar el victimismo, fortalecer la toma de decisiones y recuperar, de manera definitiva, su soberanía consciente y su seguridad psicológica.
-                </p>
+              <div className="space-y-4 text-muted font-sans leading-relaxed">
+                <p>Soy Consultora en Desarrollo Humano y Gestión Emocional, escritora y conferencista.</p>
+                <p>A través de mis programas y el Método Expansivo de Autoconocimiento, facilito resultados sostenibles en el menor tiempo posible. Contribuyo a desenmascarar bloqueos y potenciar talentos a partir de procesos prácticos, fundamentados en cinco pilares innegociables: auto-respeto, auto-cuidado, auto-valoración, auto-conocimiento y auto-liderazgo.</p>
+                <p>No hago terapias, sino clases de vida consciente respetando el libre albedrío individual. Al desactivar los patrones de desgaste emocional, los alumnos experimentan una clarificación profunda que les permite erradicar el victimismo, fortalecer la toma de decisiones y recuperar, de manera definitiva, su soberanía consciente y su seguridad psicológica.</p>
               </div>
             </div>
           </div>
