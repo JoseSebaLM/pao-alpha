@@ -11,7 +11,7 @@ import { Menu, X } from "lucide-react";
 const navLinksDefault = [
   { href: "/organizaciones", label: "Organizaciones" },
   { href: "/personas", label: "Personas" },
-  { href: "/quien-soy", label: "Quien Soy" }
+  { href: "/quien-soy", label: "Quien Soy" },
   { href: "/", label: "Inicio" },
 ];
 
@@ -19,7 +19,7 @@ const navLinksDefault = [
 const navLinksPersonas = [
   { href: "/personas", label: "Personas" },
   { href: "/personas/biblioteca", label: "Biblioteca" },
-  { href: "/quien-soy", label: "Quien Soy" }
+  { href: "/quien-soy", label: "Quien Soy" },
   { href: "/", label: "Inicio" },
 ];
 
