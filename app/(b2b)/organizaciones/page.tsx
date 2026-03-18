@@ -73,7 +73,7 @@ export default function OrganizacionesPage() {
               <div className="flex items-center gap-4 mt-8">
                 <div className="w-20 h-20 rounded-full overflow-hidden shadow-lg shrink-0">
                   <Image
-                    src="/paola.jpg"
+                    src="/pao-1.png"
                     alt="Paola Rioseco"
                     width={80}
                     height={80}
