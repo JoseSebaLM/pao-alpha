@@ -198,22 +198,17 @@ export default function ServiciosPage() {
             </p>
           </div>
 
-          {/* Contenedor Cal.com - Aislado para no afectar Tailwind 4 */}
-          <div 
-            id="agenda-container" 
-            className="min-h-[700px] bg-white rounded-2xl border border-ink/10 shadow-sm overflow-hidden"
-          >
-            <iframe 
-              src="https://cal.com/paola-rioseco/intro" 
-              className="w-full h-[700px] border-0"
-              title="Agendar sesión con Paola Rioseco"
-              allow="camera; microphone; autoplay; encrypted-media;"
-            />
+          <div className="flex flex-col items-center gap-4 py-12">
+            <p className="text-muted font-sans text-center max-w-md">
+              Para agendar una sesión, contáctame directamente y coordinamos el horario que mejor te acomode.
+            </p>
+            <a
+              href="/contacto"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-full font-sans font-medium hover:bg-primary/80 transition-colors"
+            >
+              Agendar sesión
+            </a>
           </div>
-          
-          <p className="text-xs text-muted/60 text-center mt-4">
-            Al reservar, aceptas nuestra política de cancelación con 24 horas de anticipación.
-          </p>
         </div>
       </section>
     </div>

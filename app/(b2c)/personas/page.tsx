@@ -95,9 +95,7 @@ export default function PersonasPage() {
               {/* CTA Agendar */}
               <div className="mt-8">
                 <a
-                  href="https://cal.com/paola-rioseco/intro"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/contacto"
                   className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-sans font-medium rounded-full hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -184,9 +182,7 @@ export default function PersonasPage() {
               {/* CTA Agendar */}
               <div className="mt-8">
                 <a
-                  href="https://cal.com/paola-rioseco/intro"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/contacto"
                   className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-sans font-medium rounded-full hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
