@@ -111,9 +111,7 @@ export default function OrganizacionesPage() {
                 Eliminamos el miedo al error para fortalecer la cohesión y la claridad mental, permitiendo que el equipo tome decisiones estratégicas con total confianza.
               </p>
               <a
-                href={WHATSAPP_CONFIG.getLinkWithText("b2b")}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/contacto"
                 className="mt-4 text-sm font-medium text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
               >
                 Consultar por Seguridad Psicológica
