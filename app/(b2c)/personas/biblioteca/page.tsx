@@ -81,6 +81,25 @@ export default async function BibliotecaPage() {
           Volver a Acompañamiento
         </Link>
       </div>
+
+      {/* CTA Final */}
+      <section className="py-16 px-4">
+        <div className="max-w-2xl mx-auto text-center bg-white rounded-2xl border border-ink/10 shadow-sm p-10">
+          <p className="text-micro text-primary mb-4">EL CAMBIO REAL</p>
+          <h2 className="font-serif text-2xl md:text-3xl text-ink mb-4">
+            ¿Lista/o para dar el siguiente paso?
+          </h2>
+          <p className="text-muted font-sans leading-relaxed mb-8">
+            Leer es el inicio. El cambio real ocurre cuando decides acompañarte de alguien que te guíe en el proceso.
+          </p>
+          <a
+            href="/contacto"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-full font-sans font-medium hover:bg-primary/80 transition-colors"
+          >
+            Agendar una sesión con Paola →
+          </a>
+        </div>
+      </section>
     </main>
   );
 }
