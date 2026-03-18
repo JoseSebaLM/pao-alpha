@@ -61,7 +61,7 @@ export default function OrganizacionesPage() {
             <div>
               {/* Título Principal - Más prominente */}
               <h1 className="font-serif text-4xl md:text-[2.5rem] text-ink mb-6 leading-[1.15]">
-                Gestión del Miedo Corporativo:<br className="hidden md:block" /> Claridad Estratégica y Resiliencia bajo Alta Exigencia
+                Gestión Emocional, Claridad Estratégica y Resiliencia ante la incertidumbre.
               </h1>
               
               {/* Bajada / Subtítulo */}
