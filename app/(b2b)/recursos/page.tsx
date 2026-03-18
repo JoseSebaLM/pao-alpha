@@ -79,7 +79,7 @@ export default async function BibliotecaCorporativaPage() {
             Nuestro equipo puede realizar un diagnóstico específico de riesgo psicosocial para su organización.
           </p>
           <Link
-            href="/organizaciones"
+            href="/contacto"
             className="inline-flex items-center gap-2 px-6 py-3 bg-ink text-white rounded-full font-sans font-medium hover:bg-ink/90 transition-colors"
           >
             Solicitar evaluación diagnóstica
