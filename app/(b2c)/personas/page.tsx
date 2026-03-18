@@ -148,7 +148,7 @@ export default function PersonasPage() {
             <div className="order-2 md:order-1">
               <div className="relative aspect-square rounded-2xl overflow-hidden shadow-lg">
                 <Image
-                  src="/paola.jpg"
+                  src="/pao-1.png"
                   alt="Paola Rioseco - Lectura de Alma"
                   fill
                   className="object-cover object-top"
