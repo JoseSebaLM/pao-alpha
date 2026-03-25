@@ -1,485 +1,458 @@
 # AGENTS.md - Paola Rioseco | Vida Consciente
 
-> Este archivo contiene información esencial para que agentes de IA comprendan y trabajen eficientemente en este proyecto.
-> **Proyecto:** Plataforma de "Conocimiento de Vida" para Paola Rioseco - mentora de autoconocimiento y transformación personal.
-> **Idioma principal:** Español para UI/contenido, Inglés para código
-> **Metodología:** SINT Stack (Glass Box Architecture)
+> This file contains essential information for AI agents to understand and work efficiently in this project.
+> **Project:** Paola Rioseco | Vida Consciente - Knowledge platform for personal transformation and conscious living.
+> **Language:** Spanish for UI/content, English for code
+> **Last Updated:** 2026-03-25
 
 ---
 
-## 1. Visión General del Proyecto
+## 1. Project Overview
 
-**Paola Rioseco | Vida Consciente** es una plataforma web que funciona como biblioteca viva y academia de transformación personal. No es un sitio de terapia, sino un espacio de conocimiento estructurado.
+**Paola Rioseco | Vida Consciente** is a dual-audience knowledge platform (B2B + B2C) built with Next.js and deployed on Cloudflare Workers. It functions as a living library and academy for personal transformation.
 
-- **Arquitectura:** Knowledge-First Platform con división B2B (organizaciones) y B2C (personas)
-- **UX Driver:** Claridad Mental, Estructura, "Cero Ruido"
-- **Lenguaje Visual:** Editorial (Serif moderna + Sans geométrica)
+### Architecture Philosophy
+- **SINT Stack** (Glass Box Architecture) - Transparent, maintainable code
+- **Knowledge-First Platform** - Content-driven with static Markdown
+- **Dual Path Architecture** - Separate B2B (organizations) and B2C (individuals) entry points
+- **Zero Noise UX** - Editorial design with minimal visual clutter
 
-### Filosofía de Desarrollo
-- **K.I.S.S.** (Keep It Simple, Stupid)
-- **Glass Box** - Código transparente y mantenible
-- **Precision Delivery** - Entregas enfocadas y mínimas
-
----
-
-## 2. Stack Tecnológico
-
-### Core
-| Tecnología | Versión | Uso |
-|------------|---------|-----|
-| Next.js | 16.1.6 | Framework principal con App Router |
-| React | 19.2.3 | UI Library |
-| TypeScript | 5.x | Tipado estático |
-| Tailwind CSS | 4.x | Estilos (sistema `@theme` en `globals.css`) |
-
-### UI/UX
-- **Framer Motion** ^12.33.0 - Micro-interacciones y animaciones
-- **Lucide React** ^0.563.0 - Iconografía consistente
-- **Google Fonts** - Inter (sans) y Lora (serif) via `next/font`
-
-### Gestión de Contenidos
-- **gray-matter** ^4.0.3 - Parseo de frontmatter en Markdown
-- **remark** ^15.0.1 + **remark-html** ^16.0.1 - Procesamiento de Markdown a HTML
-- Contenido estático en `/content` (sin CMS headless)
-
-### Seguridad
-- **reCAPTCHA v3** - Protección anti-spam en formularios
-- **HMAC-SHA256** (Node.js crypto) - Validación de webhooks de pago
-- **Honeypot fields** - Protección adicional contra bots
-
-### Deploy (Cloudflare)
-- **@opennextjs/cloudflare** ^1.17.1 - Adaptador para Cloudflare Workers
-- **wrangler** ^4.69.0 - CLI de Cloudflare
+### Key Characteristics
+- Content is stored in Markdown files (no headless CMS)
+- Static site generation with dynamic routes for articles
+- Security-first approach with reCAPTCHA v3 and HMAC validation
+- Chilean law compliance (Ley 21.719 - Personal Data Protection)
 
 ---
 
-## 3. Estructura de Directorios
+## 2. Technology Stack
+
+### Core Framework
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| Next.js | 16.1.6 | React framework with App Router |
+| React | 19.2.3 | UI library |
+| TypeScript | 5.x | Static typing |
+| Tailwind CSS | 4.x | Utility-first styling |
+
+### UI & Animation
+- **Framer Motion** ^12.33.0 - Page transitions and micro-interactions
+- **Lucide React** ^0.563.0 - Icon library
+- **Google Fonts** - Inter (sans) and Lora (serif) via `next/font`
+
+### Content Processing
+- **gray-matter** ^4.0.3 - Markdown frontmatter parsing
+- **remark** ^15.0.1 + **remark-html** ^16.0.1 - Markdown to HTML conversion
+- **raw-loader** ^4.0.2 - Import MD files as strings (Turbopack config)
+
+### Security
+- **reCAPTCHA v3** - Invisible spam protection
+- **HMAC-SHA256** (Node.js crypto) - Webhook signature validation
+- **Honeypot fields** - Bot detection in forms
+
+### Deployment
+- **@opennextjs/cloudflare** ^1.17.1 - Cloudflare Workers adapter
+- **wrangler** ^4.69.0 - Cloudflare CLI
+- Platform: Cloudflare Pages/Workers
+
+---
+
+## 3. Project Structure
 
 ```
 pao-alpha/
 ├── app/                          # Next.js App Router
-│   ├── (b2b)/                   # Route Group: B2B Corporativo
-│   │   ├── layout.tsx           # Layout con HeaderB2B + FooterB2B
-│   │   ├── organizaciones/
-│   │   │   └── page.tsx         # Landing Gestión del Miedo Corporativo
-│   │   └── recursos/            # Biblioteca corporativa
-│   │       ├── page.tsx
-│   │       └── [slug]/page.tsx
-│   ├── (b2c)/                   # Route Group: B2C Personal
-│   │   ├── layout.tsx           # Layout con FooterB2C + FloatingWhatsApp
-│   │   ├── contacto/
+│   ├── (b2b)/                   # Route Group: Corporate/B2B
+│   │   ├── layout.tsx           # Uses HeaderB2B + FooterB2B
+│   │   ├── organizaciones/      # Corporate landing page
 │   │   │   └── page.tsx
-│   │   ├── personas/
-│   │   │   ├── page.tsx         # Landing Acompañamiento Personal
-│   │   │   └── biblioteca/      # Biblioteca personal
-│   │   │       ├── page.tsx     # Grid de artículos
-│   │   │       └── [slug]/      # Vista de artículo individual
+│   │   └── recursos/            # Corporate library
+│   │       ├── page.tsx         # Article grid
+│   │       └── [slug]/page.tsx  # Individual article
+│   ├── (b2c)/                   # Route Group: Personal/B2C
+│   │   ├── layout.tsx           # Uses FooterB2C + FloatingWhatsApp
+│   │   ├── contacto/            # Contact form page
+│   │   ├── personas/            # Personal landing
+│   │   │   ├── page.tsx
+│   │   │   └── biblioteca/      # Personal library
+│   │   │       ├── page.tsx
+│   │   │       └── [slug]/page.tsx
 │   │   ├── servicios/
-│   │   │   └── page.tsx
 │   │   └── quien-soy/
-│   │       ├── layout.tsx
-│   │       └── page.tsx
 │   ├── api/                     # API Routes
-│   │   ├── verify-recaptcha/    # Validación reCAPTCHA v3
-│   │   │   └── route.ts
-│   │   └── webhooks/payment/    # Webhook con HMAC validation
-│   │       └── route.ts
-│   ├── globals.css              # Tailwind v4 config (@theme)
-│   ├── layout.tsx               # Root layout + fuentes
-│   ├── page.tsx                 # Home (Portal de Acceso - Silo Cero)
-│   └── not-found.tsx            # Página 404 personalizada
+│   │   ├── verify-recaptcha/    # reCAPTCHA token validation
+│   │   └── webhooks/payment/    # HMAC-secured webhook handler
+│   ├── globals.css              # Tailwind v4 config with @theme
+│   ├── layout.tsx               # Root layout with fonts
+│   ├── page.tsx                 # Home/Silo Cero (dual entry)
+│   └── not-found.tsx            # 404 page
 ├── components/
-│   ├── b2b/                     # Componentes B2B
-│   │   ├── CorporateForm.tsx    # Formulario con reCAPTCHA
+│   ├── b2b/                     # Corporate components
+│   │   ├── CorporateForm.tsx
 │   │   ├── FooterB2B.tsx
 │   │   └── HeaderB2B.tsx
-│   ├── b2c/                     # Componentes B2C
-│   │   ├── ContactForm.tsx      # Formulario con reCAPTCHA
+│   ├── b2c/                     # Personal components
+│   │   ├── ContactForm.tsx
 │   │   ├── ContactSection.tsx
-│   │   ├── FloatingWhatsApp.tsx # Widget flotante con advertencia
+│   │   ├── FloatingWhatsApp.tsx # WhatsApp widget with warning
 │   │   ├── FooterB2C.tsx
 │   │   └── Testimonials.tsx
-│   ├── content/
-│   │   ├── ConceptCard.tsx      # Tarjeta de artículo reutilizable
-│   │   └── YouTubeEmbed.tsx     # Embed de videos de YouTube
-│   └── layout/
-│       ├── Header.tsx           # Navegación scroll-aware
-│       └── TriacomaNav.tsx      # Navegación 3 pilares
-├── content/                     # Contenido Markdown
-│   ├── biblioteca-personal/     # Artículos B2C (6 artículos)
-│   └── biblioteca-corporativa/  # Artículos B2B (6 artículos)
-├── lib/                         # Utilidades
-│   ├── config.ts                # Single Source of Truth (contacto, flags, privacy)
-│   ├── mdx.ts                   # Helpers para leer/procesar Markdown
-│   └── recaptcha.ts             # Helpers de reCAPTCHA v3
-├── public/                      # Assets estáticos
+│   ├── content/                 # Content display components
+│   │   ├── ConceptCard.tsx
+│   │   └── YouTubeEmbed.tsx
+│   └── layout/                  # Layout components
+│       ├── Header.tsx           # Main navigation (scroll-aware)
+│       └── TriacomaNav.tsx      # 3-pillar navigation
+├── content/                     # Markdown content
+│   ├── biblioteca-personal/     # B2C articles (6 articles)
+│   └── biblioteca-corporativa/  # B2B articles (6 articles)
+├── lib/                         # Utilities
+│   ├── config.ts                # Centralized config (SSOT)
+│   ├── mdx.ts                   # Markdown processing utilities
+│   └── recaptcha.ts             # reCAPTCHA helpers
+├── public/                      # Static assets
 │   ├── logo.png
 │   ├── isotipo.png
 │   └── paola.jpg
-└── scripts/                     # Scripts de utilidad
-    └── test-hmac.js             # Test de validación HMAC
+└── scripts/
+    └── test-hmac.js             # Webhook security testing
 ```
 
 ---
 
-## 4. Comandos de Desarrollo
+## 4. Configuration Files
 
-```bash
-# Instalación de dependencias
-npm install
+### package.json
+Key scripts:
+- `npm run dev` - Development server (Turbopack)
+- `npm run build` - Production build
+- `npm run preview` - Build + Cloudflare preview
+- `npm run deploy` - Build + Cloudflare deploy
 
-# Desarrollo local (Turbopack habilitado por defecto en Next.js 16)
-npm run dev
-# http://localhost:3000
+### next.config.ts
+- Image domains: `img.youtube.com`, `i.ytimg.com`
+- Turbopack rules for `.md` files with raw-loader
+- OpenNext Cloudflare integration
 
-# Build de producción (Next.js)
-npm run build
+### tailwind.config.ts
+Custom colors:
+- `primary`: #C01D65 (Magenta)
+- `mente`: #273DA0 (Blue)
+- `cuerpo`: #FB4C00 (Orange)
+- `espiritu`: #9B18B9 (Violet)
+- `paper`: #FDFCF8 (Cream background)
+- `ink`: #1C1917 (Dark text)
 
-# Iniciar servidor de producción
-npm run start
-
-# Linting
-npm run lint
-
-# Cloudflare (OpenNext)
-npm run preview      # Build + preview local
-npm run deploy       # Build + deploy a Cloudflare
-npm run upload       # Build + upload
-npm run cf-typegen   # Generar tipos de Cloudflare
-```
+### wrangler.jsonc
+Cloudflare Workers configuration:
+- Compatibility date: 2025-09-27
+- Flags: `nodejs_compat`
+- Public vars: B2B feature flags
+- Services: Self-reference binding
 
 ---
 
-## 5. Variables de Entorno
+## 5. Environment Variables
 
-Crear archivo `.env.local` en la raíz:
+Create `.env.local` in project root:
 
 ```env
 # Feature Flags
-NEXT_PUBLIC_ENABLE_B2B=true              # Activa sección B2B
-NEXT_PUBLIC_ENABLE_B2B_LIBRARY=true      # Activa biblioteca corporativa
+NEXT_PUBLIC_ENABLE_B2B=true              # Enable B2B section
+NEXT_PUBLIC_ENABLE_B2B_LIBRARY=true      # Enable corporate library
 
-# Seguridad - Webhooks
-PAYMENT_WEBHOOK_SECRET=tu_secreto_aqui
+# Security - Webhooks
+PAYMENT_WEBHOOK_SECRET=your_secret_here
 
-# reCAPTCHA v3 (PRIV-002)
-# Obtener claves en: https://www.google.com/recaptcha/admin
+# reCAPTCHA v3
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_site_key
 RECAPTCHA_SECRET_KEY=your_secret_key
 ```
 
-**Nota:** Las variables `NEXT_PUBLIC_*` también se configuran en `wrangler.jsonc` para deploy en Cloudflare.
+**Note:** `NEXT_PUBLIC_*` vars must also be set in `wrangler.jsonc` for production.
 
 ---
 
-## 6. Sistema de Diseño
+## 6. Content Management
 
-### Paleta de Colores (CSS Variables)
-```css
---color-primary:   #C01D65   /* Magenta - CTAs principal */
---color-mente:     #273DA0   /* Azul */
---color-cuerpo:    #FB4C00   /* Naranja */
---color-espiritu:  #9B18B9   /* Violeta */
---color-paper:     #FDFCF8   /* Fondo crema */
---color-ink:       #1C1917   /* Texto principal */
---color-muted:     #78716C   /* Texto secundario */
+Articles are Markdown files in `/content/` with frontmatter:
+
+```markdown
+---
+title: "Article Title"
+date: "2026-01-25"
+excerpt: "Short description for previews"
+category: "Category Name"
+author: "Paola Rioseco"
+readTime: "4 min"
+---
+
+# Content in Markdown
+
+Article body here...
 ```
 
-### Tipografía
-- **Sans:** Inter (variable) - UI, navegación, cuerpo de texto
-- **Serif:** Lora (variable) - Títulos, énfasis editorial
+### Adding New Articles
 
-### Clases de Utilidad (Tailwind v4)
-```css
-.text-micro        /* Texto pequeño uppercase para etiquetas */
-.font-sans         /* Inter */
-.font-serif        /* Lora */
-.bg-paper          /* Fondo crema */
-.text-ink          /* Texto oscuro */
-```
+1. Create `.md` file in appropriate directory:
+   - B2C: `content/biblioteca-personal/`
+   - B2B: `content/biblioteca-corporativa/`
+
+2. Add slug to corresponding array in `lib/mdx.ts`:
+   - `BIBLIOTECA_PERSONAL_SLUGS` for B2C
+   - `BIBLIOTECA_CORPORATIVA_SLUGS` for B2B
+
+3. Restart dev server to see changes (build-time content loading)
+
+### Content Utilities (lib/mdx.ts)
+
+| Function | Purpose |
+|----------|---------|
+| `getAllArticles(silo)` | List all articles in a library |
+| `getArticleBySlug(silo, slug)` | Get single article with HTML content |
+| `generateArticleParams(silo)` | Generate static params for routes |
+| `articleExists(silo, slug)` | Check if article exists |
 
 ---
 
-## 7. Convenciones de Código
+## 7. Code Conventions
 
-### Estilo General
-- **Idioma:** Español para UI y contenido, Inglés para código
-- **Comillas:** Dobles en JSX y TypeScript
-- **Indentación:** 2 espacios
-- **Punto y coma:** Requerido
+### Language
+- **Code:** English (variables, functions, components)
+- **UI/Content:** Spanish (all user-facing text)
 
-### Estructura de Componentes
+### File Naming
+- Components: `PascalCase.tsx`
+- Pages: `page.tsx` (Next.js convention)
+- Layouts: `layout.tsx`
+- Utilities: `camelCase.ts`
+
+### Code Style
+- Quotes: Double quotes for JSX/TypeScript
+- Indentation: 2 spaces
+- Semicolons: Required
+- Max line length: ~100 characters
+
+### Component Structure
 ```tsx
-// 1. Imports (React primero, luego Next, luego terceros, luego locales)
+// 1. Imports (React, Next, third-party, local)
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { WHATSAPP_CONFIG } from "@/lib/config";
 
-// 2. Types/Interfaces (si son específicos del componente)
+// 2. Types/Interfaces (if component-specific)
 interface Props {
   title: string;
 }
 
-// 3. Componente
+// 3. Component
 export default function ComponentName({ title }: Props) {
-  // hooks primero
+  // Hooks first
   const [state, setState] = useState();
   
-  // handlers
+  // Handlers
   const handleClick = () => {};
   
-  // render
+  // Render
   return <div>{title}</div>;
 }
 ```
 
-### Nomenclatura de Archivos
-- Componentes: `PascalCase.tsx` (ej: `CorporateForm.tsx`)
-- Páginas: `page.tsx` (Next.js convención)
-- Layouts: `layout.tsx`
-- Hooks: `useNombreHook.ts`
-- Utilidades: `nombreUtilidad.ts`
-
-### Organización de Imports
+### Import Order
 1. React/Next.js
-2. Librerías de terceros
-3. Componentes locales (`@/components/...`)
-4. Utilidades (`@/lib/...`)
-5. Estilos
+2. Third-party libraries
+3. Components (`@/components/...`)
+4. Utilities (`@/lib/...`)
+5. Styles
 
 ---
 
-## 8. Gestión de Contenido
-
-Los artículos se gestionan como archivos Markdown en `/content/`.
-
-### Estructura de un Artículo
-```markdown
----
-title: "Título del Artículo"
-date: "2026-01-25"
-excerpt: "Extracto corto para previews"
-category: "Desarrollo Personal"
-author: "Paola Rioseco"
-readTime: "4 min"
----
-
-# Contenido en Markdown
-
-Texto del artículo aquí...
-```
-
-### Proceso para Agregar Contenido
-1. Crear archivo `.md` en `content/biblioteca-personal/` o `content/biblioteca-corporativa/`
-2. Incluir frontmatter con todos los campos requeridos
-3. Agregar el slug a la lista correspondiente en `lib/mdx.ts`:
-   - `BIBLIOTECA_PERSONAL_SLUGS` para B2C
-   - `BIBLIOTECA_CORPORATIVA_SLUGS` para B2B
-4. Requiere reiniciar el servidor para ver cambios (lectura en build time)
-
-### Funciones Utilitarias (lib/mdx.ts)
-- `getAllArticles(silo)` - Lista todos los artículos de un silo
-- `getArticleBySlug(silo, slug)` - Obtiene un artículo con contenido HTML
-- `generateArticleParams(silo)` - Genera parámetros para rutas estáticas
-- `articleExists(silo, slug)` - Verifica existencia de artículo
-
----
-
-## 9. Seguridad
+## 8. Security Guidelines
 
 ### reCAPTCHA v3 (PRIV-002)
-- Implementación invisible (sin checkbox)
-- Score mínimo: 0.5
-- Acciones específicas por formulario:
-  - `submit_contact_b2c`
-  - `submit_contact_b2b`
-- Implementación en `lib/recaptcha.ts`
+- Implementation: Invisible (no checkbox)
+- Minimum score: 0.5
+- Actions: `submit_contact_b2c`, `submit_contact_b2b`
+- Site key: Public, Secret key: Server-only
 
 ### Honeypot Fields
-- Campo oculto `name="website"` en formularios
-- Si contiene valor = spam (rechazo silencioso)
+All forms must include hidden field:
+```tsx
+<div className="hidden" aria-hidden="true">
+  <label htmlFor="website">Website</label>
+  <input type="text" id="website" name="website" tabIndex={-1} autoComplete="off" />
+</div>
+```
+If filled = spam (silent rejection).
 
-### Protección de Datos (Ley 21.719)
-- Checkbox de privacidad SIEMPRE desmarcado por defecto
-- Texto obligatorio en `PRIVACY_CONFIG.fullNotice`
-- Disclaimer en todos los formularios corporativos
+### Data Protection (Ley 21.719)
+- Privacy checkbox ALWAYS unchecked by default
+- Required text in `PRIVACY_CONFIG.fullNotice`
+- B2B forms must include legal disclaimer
 
 ### Webhooks (SEC-001, SEC-002)
-- Validación HMAC-SHA256 obligatoria
-- Sanitización de logs: NUNCA loggear payload completo
-- Comparación timing-safe para prevenir timing attacks
-
-### Script de Testing HMAC
-```bash
-node scripts/test-hmac.js
-```
+- HMAC-SHA256 signature validation required
+- Timing-safe comparison using `crypto.timingSafeEqual()`
+- Never log full payloads or personal data
+- Test with: `node scripts/test-hmac.js`
 
 ---
 
-## 10. Feature Flags
+## 9. Feature Flags
 
-El proyecto usa feature flags basados en variables de entorno:
+Controlled via environment variables:
 
 ```tsx
-// En componentes/páginas
+// Check in components/pages
 const isB2BEnabled = process.env.NEXT_PUBLIC_ENABLE_B2B === 'true';
 
-// En lib/config.ts
-export const FEATURE_FLAGS = {
-  b2bEnabled: process.env.NEXT_PUBLIC_ENABLE_B2B === "true",
-  b2bLibraryEnabled: process.env.NEXT_PUBLIC_ENABLE_B2B_LIBRARY === "true",
-};
+// Or use from config
+import { FEATURE_FLAGS } from "@/lib/config";
+if (FEATURE_FLAGS.b2bEnabled) { ... }
 ```
 
-**Regla:** Cuando un flag está desactivado, mostrar vista "Apagada" con mensaje profesional y CTA de retorno.
+When disabled, show "Powered Off" view with professional message and return CTA.
 
 ---
 
-## 11. Integraciones
+## 10. Key Components
 
-### WhatsApp Business
-- Configuración centralizada en `WHATSAPP_CONFIG` (`lib/config.ts`)
-- Mensajes predefinidos por contexto: `default`, `b2b`, `mentoring`, `tarot`, `workshop`
-- Botón flotante en todas las páginas B2C (`FloatingWhatsApp.tsx`)
-- **Nota importante:** Solo mensajes de texto, no se atienden llamadas
+### FloatingWhatsApp
+- Fixed position button (right side, vertically centered)
+- Shows warning tooltip on hover (required text from config)
+- Context-aware messages (default, b2b, mentoring, tarot, workshop)
+- Only appears in B2C layouts
 
-### Cal.com
-- Integración para agendamiento de sesiones
-- URL: `https://cal.com/paola-rioseco/intro`
+### ContactForm / CorporateForm
+- reCAPTCHA v3 protected
+- Honeypot spam protection
+- Loading and error states
+- Privacy compliance checkbox
 
-### reCAPTCHA
-- Script cargado dinámicamente vía `loadRecaptchaScript()`
-- Token verificado en `/api/verify-recaptcha`
+### Header
+- Scroll-aware background (transparent → blurred)
+- Dynamic navigation based on current section
+- Mobile hamburger menu with animations
+- Contact CTA button
+
+---
+
+## 11. Build & Deployment
+
+### Development
+```bash
+npm install
+npm run dev          # http://localhost:3000
+```
+
+### Production Build
+```bash
+npm run build        # Standard Next.js build
+npm run lint         # ESLint check
+```
+
+### Cloudflare Deploy
+```bash
+npm run preview      # Build + local preview
+npm run deploy       # Build + deploy to Cloudflare
+npm run cf-typegen   # Generate Cloudflare types
+```
+
+### Build Output
+- Uses OpenNext Cloudflare adapter
+- Output: `.open-next/` directory
+- Worker script: `.open-next/worker.js`
+- Static assets: `.open-next/assets/`
 
 ---
 
 ## 12. Testing
 
-**Nota:** El proyecto actualmente no tiene framework de testing configurado.
+### No Formal Test Framework
+The project currently has no Jest/Vitest/Playwright configured.
 
-Para implementar tests, se recomienda:
-- **Unit tests:** Vitest o Jest
-- **E2E tests:** Playwright
-- **Component tests:** Testing Library + Vitest
+### Manual Testing
+- `scripts/test-hmac.js` - Test webhook HMAC validation
+- Requires running server: `npm run dev`
 
-### Script de Prueba de Seguridad
-Existe `scripts/test-hmac.js` para probar la validación HMAC de webhooks:
-```bash
-node scripts/test-hmac.js
-```
-
----
-
-## 13. Despliegue
-
-### Plataforma: Cloudflare Pages (con OpenNext)
-
-La aplicación usa `@opennextjs/cloudflare` para ejecutarse en Cloudflare Workers.
-
-### Configuración (`wrangler.jsonc`)
-```json
-{
-  "name": "pao-alpha",
-  "compatibility_date": "2025-09-27",
-  "compatibility_flags": ["nodejs_compat"],
-  "vars": {
-    "NEXT_PUBLIC_ENABLE_B2B": "true",
-    "NEXT_PUBLIC_ENABLE_B2B_LIBRARY": "true"
-  }
-}
-```
-
-### Preparación para Deploy
-1. Configurar variables de entorno en `wrangler.jsonc`
-2. Ejecutar build local para verificar: `npm run build`
-3. Revisar que no haya errores de lint: `npm run lint`
-4. Deploy: `npm run deploy`
+### Checklist for Changes
+- [ ] Works on mobile (responsive)
+- [ ] No ESLint errors (`npm run lint`)
+- [ ] Build succeeds (`npm run build`)
+- [ ] reCAPTCHA works (if form modified)
+- [ ] Privacy checkbox unchecked by default
+- [ ] No hardcoded text that belongs in config
 
 ---
 
-## 14. Checklist para Nuevos Features
+## 13. Common Issues
 
-Antes de implementar un nuevo feature:
-
-- [ ] ¿Está alineado con la filosofía "Cero Ruido"?
-- [ ] ¿Usa el sistema de diseño existente (colores, tipografía)?
-- [ ] ¿Los formularios incluyen protección reCAPTCHA?
-- [ ] ¿Los formularios respetan Ley 21.719 (checkbox privacidad desmarcado)?
-- [ ] ¿Se manejan estados de loading y error?
-- [ ] ¿Funciona en mobile (diseño responsive)?
-- [ ] ¿No hay hardcodeo de textos que deberían estar en `lib/config.ts`?
-- [ ] ¿Las páginas nuevas usan metadata para SEO?
-
----
-
-## 15. Troubleshooting Común
-
-### Problemas con Tailwind v4
+### Tailwind v4 Issues
 ```bash
 rm -rf .next && npm run dev
 ```
 
-### Cambios en content no se reflejan
-Los archivos Markdown se leen en build time. Reiniciar el servidor:
-```bash
-# Detener y volver a iniciar
-npm run dev
-```
+### Content Not Updating
+Markdown is read at build time. Restart dev server after changes.
 
-### Error de reCAPTCHA
-- Verificar que `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` esté configurado
-- Verificar dominio en consola de Google reCAPTCHA
+### reCAPTCHA Errors
+- Check `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` is set
+- Verify domain in Google reCAPTCHA console
 
-### Error de fuentes
-Las fuentes se cargan via `next/font` en `app/layout.tsx`. No requieren configuración adicional.
-
-### Error de Cloudflare/OpenNext
-- Verificar que `wrangler.jsonc` tenga `nodejs_compat` en flags
-- Ejecutar `npm run cf-typegen` para regenerar tipos
+### Cloudflare Errors
+- Ensure `wrangler.jsonc` has `nodejs_compat` flag
+- Run `npm run cf-typegen` to regenerate types
 
 ---
 
-## 16. Contacto y Referencias
+## 14. External Integrations
 
+### WhatsApp Business
+- Config: `WHATSAPP_CONFIG` in `lib/config.ts`
+- Number: +569 99396166
+- Warning text is MANDATORY (do not modify)
+
+### Cal.com
+- Booking URL: `https://cal.com/paola-rioseco/intro`
+
+### Google reCAPTCHA
+- Admin: https://www.google.com/recaptcha/admin
+- Version: v3 (invisible)
+
+---
+
+## 15. Agent Checklist
+
+Before modifying code:
+- [ ] Does it follow "Zero Noise" philosophy?
+- [ ] Does it use existing design system (colors, typography)?
+- [ ] Are forms protected with reCAPTCHA?
+- [ ] Is privacy checkbox unchecked by default (Ley 21.719)?
+- [ ] Are loading/error states handled?
+- [ ] Is it responsive (mobile-first)?
+- [ ] Is text centralized in `lib/config.ts`?
+- [ ] Does new page have SEO metadata?
+
+When creating new pages:
+- [ ] Use correct route group `(b2b)` or `(b2c)`
+- [ ] Import correct layout
+- [ ] Include metadata export
+- [ ] Reuse existing components
+
+---
+
+## 16. Resources
+
+- **Tailwind v4 Docs:** https://tailwindcss.com/docs
+- **Next.js App Router:** https://nextjs.org/docs/app
+- **OpenNext Cloudflare:** https://opennext.js.org/cloudflare
+- **Framer Motion:** https://www.framer.com/motion/
+
+---
+
+## 17. Contact
+
+- **Developer:** sint.cl
 - **WhatsApp:** +569 99396166
 - **Email:** paorioseco@gmail.com
-- **YouTube:** @paolarioseco
-- **LinkedIn:** linkedin.com/in/paolarioseco
-- **Cal.com:** https://cal.com/paola-rioseco/intro
-- **Desarrollado por:** sint.cl
-
-### Recursos Externos
-- [Tailwind CSS v4 Docs](https://tailwindcss.com/docs)
-- [Next.js App Router](https://nextjs.org/docs/app)
-- [Google reCAPTCHA Admin](https://www.google.com/recaptcha/admin)
-- [OpenNext Cloudflare](https://opennext.js.org/cloudflare)
-
----
-
-## 17. Notas para Agentes de IA
-
-### Al Modificar Código
-1. **Mantén consistencia:** Siempre verifica el estilo existente en archivos cercanos
-2. **No rompas el contrato:** Los objetos en `lib/config.ts` son Single Source of Truth
-3. **Responsive first:** Todas las modificaciones deben funcionar en mobile
-4. **Accesibilidad:** Usa etiquetas ARIA donde sea necesario
-
-### Al Crear Nuevas Páginas
-1. Usa los route groups `(b2b)` o `(b2c)` según corresponda
-2. Importa los layouts correctos
-3. Incluye metadata para SEO
-4. Reutiliza componentes existentes antes de crear nuevos
-
-### Al Trabajar con Formularios
-1. Siempre incluye validación de reCAPTCHA v3
-2. Agrega campo honeypot `name="website"`
-3. Checkbox de privacidad desmarcado por defecto (Ley 21.719)
-4. Estados de loading y feedback visual
-
-### Al Agregar Contenido
-1. Usar guiones en nombres de archivo (kebab-case)
-2. Fecha en formato ISO: `YYYY-MM-DD`
-3. Incluir todos los campos del frontmatter
-4. Agregar el slug a la lista correspondiente en `lib/mdx.ts`
-5. Testear el renderizado antes de finalizar
