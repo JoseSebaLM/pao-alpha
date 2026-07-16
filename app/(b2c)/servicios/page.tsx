@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Calendar, Users, Check, Sparkles, ArrowRight } from "lucide-react";
+import { Users, Check, Sparkles, ArrowRight } from "lucide-react";
 
 export default function ServiciosPage() {
   return (
@@ -20,10 +20,6 @@ export default function ServiciosPage() {
           <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-primary/10">
             {/* Label */}
             <div className="flex flex-wrap items-center gap-3 mb-6">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary text-white text-sm font-medium rounded-full">
-                <Calendar className="w-4 h-4" />
-                Próximo evento · 26 Febrero 2026
-              </span>
               <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-cuerpo/10 text-cuerpo text-xs font-medium rounded-full">
                 <Users className="w-3 h-3" />
                 Cupo limitado
@@ -58,12 +54,6 @@ export default function ServiciosPage() {
                 className="inline-flex items-center justify-center px-8 py-4 bg-primary text-white font-sans font-medium rounded-full hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
               >
                 Reservar mi lugar
-              </Link>
-              <Link
-                href="/biblioteca/workshop-vida-consciente"
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-ink/20 text-ink font-sans font-medium rounded-full hover:border-primary hover:text-primary transition-colors"
-              >
-                Ver programa detallado
               </Link>
             </div>
           </div>

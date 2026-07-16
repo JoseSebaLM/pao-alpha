@@ -8,7 +8,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 // Menú para páginas generales (Inicio, Quien Soy, Organizaciones)
+// NOTA: la reestructuración completa del nav (orden y CTA "Agendar") es Fase 1.5.
+// Aquí solo se agrega "Servicios" para que la página deje de estar huérfana (bug 0.3.5).
 const navLinksDefault = [
+  { href: "/servicios", label: "Servicios" },
   { href: "/organizaciones", label: "Organizaciones" },
   { href: "/personas", label: "Personas" },
   { href: "/quien-soy", label: "Quien Soy" },
@@ -17,6 +20,7 @@ const navLinksDefault = [
 
 // Menú para sección Personas
 const navLinksPersonas = [
+  { href: "/servicios", label: "Servicios" },
   { href: "/personas", label: "Personas" },
   { href: "/personas/biblioteca", label: "Biblioteca" },
   { href: "/quien-soy", label: "Quien Soy" },

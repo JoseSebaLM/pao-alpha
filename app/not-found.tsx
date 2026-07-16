@@ -1,8 +1,11 @@
 import Link from "next/link";
+import Header from "@/components/layout/Header";
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen bg-paper flex flex-col items-center justify-center px-4">
+    <>
+      <Header />
+      <main className="min-h-screen bg-paper flex flex-col items-center justify-center px-4">
       <div className="max-w-md text-center">
         <div className="w-16 h-16 border border-ink/20 rounded-full flex items-center justify-center mx-auto mb-8">
           <span className="font-serif text-2xl text-ink">404</span>
@@ -26,6 +29,7 @@ export default function NotFound() {
           Volver al inicio
         </Link>
       </div>
-    </main>
+      </main>
+    </>
   );
 }
