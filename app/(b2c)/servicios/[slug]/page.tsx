@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { Check } from "lucide-react";
 import { ALL_SERVICES, getService, type ServiceSlug } from "@/lib/services";
@@ -8,6 +9,7 @@ import LandingHero from "@/components/landing/LandingHero";
 import PriceBlock from "@/components/landing/PriceBlock";
 import PayButtons from "@/components/landing/PayButtons";
 import FaqAccordion from "@/components/landing/FaqAccordion";
+import PaymentErrorNotice from "@/components/landing/PaymentErrorNotice";
 import ViewContentTracker from "@/components/analytics/ViewContentTracker";
 
 interface LandingPageProps {
@@ -88,6 +90,11 @@ export default async function LandingPage({ params }: LandingPageProps) {
     <div className="bg-paper">
       {/* Meta Pixel: ViewContent al montar la landing */}
       <ViewContentTracker slug={service.slug} priceCLP={service.priceCLP} />
+
+      {/* Vuelta desde Mercado Pago con ?pago=error */}
+      <Suspense fallback={null}>
+        <PaymentErrorNotice />
+      </Suspense>
 
       {/* 1. Hero */}
       <LandingHero service={service} image={HERO_IMAGE[service.slug]} />
