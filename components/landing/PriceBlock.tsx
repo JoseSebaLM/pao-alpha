@@ -29,6 +29,7 @@ export default function PriceBlock({
       <PayButtons
         slug={service.slug}
         paymentEnabled={paymentEnabled}
+        priceCLP={service.priceCLP}
         whatsappContext={whatsappContext}
         buttonClass={buttonClass}
       />

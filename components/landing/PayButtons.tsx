@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { WHATSAPP_CONFIG } from "@/lib/config";
 import type { ServiceSlug } from "@/lib/services";
+import { track } from "@/components/analytics/MetaPixel";
 
 type WhatsappContext = "workshop" | "mentoring" | "tarot";
 
@@ -10,6 +11,7 @@ interface PayButtonsProps {
   slug: ServiceSlug;
   /** true solo cuando hay MP_ACCESS_TOKEN y priceCLP > 0 (se resuelve en el servidor). */
   paymentEnabled: boolean;
+  priceCLP: number;
   whatsappContext: WhatsappContext;
   /** Clases de color completas del botón (Tailwind no admite clases dinámicas). */
   buttonClass: string;
@@ -18,6 +20,7 @@ interface PayButtonsProps {
 export default function PayButtons({
   slug,
   paymentEnabled,
+  priceCLP,
   whatsappContext,
   buttonClass,
 }: PayButtonsProps) {
@@ -47,6 +50,17 @@ export default function PayButtons({
   const handlePay = async () => {
     setLoading(true);
     setError(false);
+
+    // Se dispara al inicio, no junto al redirect: el beacon del Pixel necesita
+    // alcanzar a salir antes de que la navegación descargue la página, y el
+    // round-trip del POST le da ese margen.
+    track("InitiateCheckout", {
+      content_ids: [slug],
+      content_type: "product",
+      value: priceCLP,
+      currency: "CLP",
+    });
+
     try {
       const res = await fetch(`/api/checkout/${slug}`, { method: "POST" });
       if (!res.ok) throw new Error("checkout-failed");

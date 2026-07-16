@@ -173,6 +173,7 @@ export default async function LandingPage({ params }: LandingPageProps) {
             <PayButtons
               slug={service.slug}
               paymentEnabled={paymentEnabled}
+              priceCLP={service.priceCLP}
               whatsappContext={whatsappContext}
               buttonClass={c.button}
             />
