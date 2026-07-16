@@ -117,3 +117,58 @@ export async function sendContactEmail({
     throw new Error(error.message || "Error enviando el email");
   }
 }
+
+export interface PaymentNotification {
+  serviceName: string;
+  amountLabel: string;
+  payerName: string;
+  payerEmail?: string;
+  externalReference: string;
+  paymentId: string;
+}
+
+/**
+ * Avisa a Paola de un pago aprobado (lo dispara el webhook de Mercado Pago).
+ * Lanza si Resend no está configurado o si la API devuelve error.
+ */
+export async function sendPaymentApprovedEmail(
+  payment: PaymentNotification
+): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY no configurada");
+  }
+
+  const resend = new Resend(apiKey);
+
+  const html = `<!doctype html>
+<html lang="es">
+  <body style="margin:0;background:#FDFCF8;font-family:Arial,Helvetica,sans-serif;">
+    <div style="max-width:560px;margin:0 auto;padding:24px;">
+      <h1 style="font-size:18px;color:#C01D65;margin:0 0 16px;">Pago aprobado</h1>
+      <table style="width:100%;border-collapse:collapse;background:#ffffff;border:1px solid #eee;border-radius:8px;">
+        ${row("Servicio", payment.serviceName)}
+        ${row("Monto", payment.amountLabel)}
+        ${row("Pagador", payment.payerName)}
+        ${row("Email", payment.payerEmail)}
+        ${row("Referencia", payment.externalReference)}
+        ${row("ID de pago", payment.paymentId)}
+      </table>
+      <p style="font-size:12px;color:#a8a29e;margin-top:16px;">
+        Notificación automática de Mercado Pago recibida en paolarioseco.com.
+      </p>
+    </div>
+  </body>
+</html>`;
+
+  const { error } = await resend.emails.send({
+    from: FROM_EMAIL,
+    to: EMAIL_CONFIG.b2c,
+    subject: `Pago aprobado · ${payment.serviceName} · ${payment.amountLabel}`,
+    html,
+  });
+
+  if (error) {
+    throw new Error(error.message || "Error enviando el email de pago");
+  }
+}

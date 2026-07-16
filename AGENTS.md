@@ -115,7 +115,6 @@ pao-alpha/
 │   ├── isotipo.png
 │   └── paola.jpg
 └── scripts/
-    └── test-hmac.js             # Webhook security testing
 ```
 
 ---
@@ -161,8 +160,10 @@ Create `.env.local` in project root:
 NEXT_PUBLIC_ENABLE_B2B=true              # Enable B2B section
 NEXT_PUBLIC_ENABLE_B2B_LIBRARY=true      # Enable corporate library
 
-# Security - Webhooks
-PAYMENT_WEBHOOK_SECRET=your_secret_here
+# Mercado Pago (Checkout Pro)
+MP_ACCESS_TOKEN=your_access_token        # sin esta var el checkout responde 503
+MP_WEBHOOK_SECRET=your_webhook_secret    # firma x-signature de las notificaciones
+NEXT_PUBLIC_SITE_URL=https://paolarioseco.com
 
 # reCAPTCHA v3
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_site_key
@@ -295,7 +296,10 @@ If filled = spam (silent rejection).
 - HMAC-SHA256 signature validation required
 - Timing-safe comparison using `crypto.timingSafeEqual()`
 - Never log full payloads or personal data
-- Test with: `node scripts/test-hmac.js`
+- Mercado Pago signs the manifest `id:<data.id>;request-id:<x-request-id>;ts:<ts>;`
+  (`data.id` from the URL query params, lowercased; absent segments removed),
+  sent in the `x-signature` header as `ts=...,v1=...`. Key: `MP_WEBHOOK_SECRET`.
+- Test with the notification simulator in Tus integraciones > Webhooks
 
 ---
 
