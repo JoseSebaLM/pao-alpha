@@ -8,6 +8,7 @@ import LandingHero from "@/components/landing/LandingHero";
 import PriceBlock from "@/components/landing/PriceBlock";
 import PayButtons from "@/components/landing/PayButtons";
 import FaqAccordion from "@/components/landing/FaqAccordion";
+import ViewContentTracker from "@/components/analytics/ViewContentTracker";
 
 interface LandingPageProps {
   params: Promise<{ slug: string }>;
@@ -85,6 +86,9 @@ export default async function LandingPage({ params }: LandingPageProps) {
 
   return (
     <div className="bg-paper">
+      {/* Meta Pixel: ViewContent al montar la landing */}
+      <ViewContentTracker slug={service.slug} priceCLP={service.priceCLP} />
+
       {/* 1. Hero */}
       <LandingHero service={service} image={HERO_IMAGE[service.slug]} />
 
