@@ -97,8 +97,9 @@ export const SERVICES: Record<ServiceSlug, Service> = {
     priceLabel: "Consultar", // TODO(operador)
     durationLabel: "60 minutos",
     modality: "Online 1:1",
-    // TODO(operador): confirmar slug real de Cal.com para mentoring.
-    calLink: "paola-rioseco/mentoring",
+    // TODO(operador): la cuenta Cal.com aún no existe. Dejar en null hasta
+    // tenerla; un slug estimado rompería el embed de /gracias.
+    calLink: null,
     color: "mente",
     faq: [
       {
@@ -136,8 +137,9 @@ export const SERVICES: Record<ServiceSlug, Service> = {
     priceLabel: "Consultar", // TODO(operador)
     durationLabel: "60 minutos",
     modality: "Online 1:1",
-    // TODO(operador): confirmar slug real de Cal.com para tarot.
-    calLink: "paola-rioseco/tarot",
+    // TODO(operador): la cuenta Cal.com aún no existe. Dejar en null hasta
+    // tenerla; un slug estimado rompería el embed de /gracias.
+    calLink: null,
     color: "espiritu",
     faq: [
       {
