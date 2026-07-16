@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { RECAPTCHA_CONFIG, PRIVACY_CONFIG, WHATSAPP_CONFIG } from "@/lib/config";
 import { getRecaptchaToken, loadRecaptchaScript } from "@/lib/recaptcha";
+import { track } from "@/components/analytics/MetaPixel";
 
 interface FormData {
   nombre: string;
@@ -76,6 +77,7 @@ export default function CorporateForm() {
         throw new Error("send-failed");
       }
 
+      track("Lead", { content_category: "b2b" });
       setIsSubmitted(true);
     } catch {
       setSubmitError(

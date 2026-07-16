@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { RECAPTCHA_CONFIG, WHATSAPP_CONFIG } from "@/lib/config";
 import { getRecaptchaToken, loadRecaptchaScript } from "@/lib/recaptcha";
+import { track } from "@/components/analytics/MetaPixel";
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,6 +45,7 @@ export default function ContactForm() {
         throw new Error("send-failed");
       }
 
+      track("Lead", { content_category: "b2c" });
       setIsSubmitted(true);
     } catch {
       setSubmitError(
