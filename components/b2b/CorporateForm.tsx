@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { RECAPTCHA_CONFIG, PRIVACY_CONFIG } from "@/lib/config";
-import { getRecaptchaToken, loadRecaptchaScript, verifyRecaptchaToken } from "@/lib/recaptcha";
+import { RECAPTCHA_CONFIG, PRIVACY_CONFIG, WHATSAPP_CONFIG } from "@/lib/config";
+import { getRecaptchaToken, loadRecaptchaScript } from "@/lib/recaptcha";
 
 interface FormData {
   nombre: string;
@@ -15,7 +15,7 @@ interface FormData {
 export default function CorporateForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [recaptchaError, setRecaptchaError] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>({
     nombre: "",
     cargo: "",
@@ -39,15 +39,12 @@ export default function CorporateForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setRecaptchaError(null);
-    
-    // Honeypot check - si el campo website está lleno, es spam
+    setSubmitError(null);
+
+    // Honeypot - se lee del DOM y se envía al servidor para validarlo allí
     const formElement = e.currentTarget;
     const honeypot = (formElement.querySelector('input[name="website"]') as HTMLInputElement)?.value;
-    if (honeypot) {
-      return; // Silenciosamente rechazar spam
-    }
-    
+
     if (!formData.aceptaPrivacidad) {
       alert("Debe aceptar la política de privacidad para continuar.");
       return;
@@ -55,29 +52,38 @@ export default function CorporateForm() {
 
     setIsSubmitting(true);
 
-    // reCAPTCHA v3 - Obtener token (PRIV-002)
+    // reCAPTCHA v3 - Obtener token (la verificación ocurre en el servidor)
     const recaptchaToken = await getRecaptchaToken(RECAPTCHA_CONFIG.actions.contactB2B);
-    
-    if (!recaptchaToken) {
-      setRecaptchaError("Error de verificación de seguridad. Por favor, intenta de nuevo.");
-      setIsSubmitting(false);
-      return;
-    }
 
-    // Verificar token con backend
-    const verification = await verifyRecaptchaToken(recaptchaToken);
-    
-    if (!verification.success) {
-      setRecaptchaError("No se pudo verificar el envío. Por favor, intenta de nuevo.");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "b2b",
+          nombre: formData.nombre,
+          cargo: formData.cargo,
+          email: formData.email,
+          empresa: formData.empresa,
+          website: honeypot, // honeypot, validado en el servidor
+          recaptchaToken,
+        }),
+      });
+
+      const result = await response.json().catch(() => ({ ok: false }));
+
+      if (!response.ok || !result.ok) {
+        throw new Error("send-failed");
+      }
+
+      setIsSubmitted(true);
+    } catch {
+      setSubmitError(
+        "No pudimos enviar tu solicitud. Escríbenos por WhatsApp e intentamos por ahí."
+      );
+    } finally {
       setIsSubmitting(false);
-      return;
     }
-    
-    // Simular envío a paorioseco@gmail.com
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
   };
 
   if (isSubmitted) {
@@ -203,10 +209,20 @@ export default function CorporateForm() {
         </label>
       </div>
 
-      {/* Error de reCAPTCHA */}
-      {recaptchaError && (
+      {/* Error de envío */}
+      {submitError && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-xl">
-          <p className="text-sm text-red-600">{recaptchaError}</p>
+          <p className="text-sm text-red-600">
+            {submitError}{" "}
+            <a
+              href={WHATSAPP_CONFIG.getLinkWithText("b2b")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium underline hover:text-red-700"
+            >
+              Abrir WhatsApp
+            </a>
+          </p>
         </div>
       )}
 

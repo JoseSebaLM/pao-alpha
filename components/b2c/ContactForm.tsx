@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { RECAPTCHA_CONFIG } from "@/lib/config";
-import { getRecaptchaToken, loadRecaptchaScript, verifyRecaptchaToken } from "@/lib/recaptcha";
+import { RECAPTCHA_CONFIG, WHATSAPP_CONFIG } from "@/lib/config";
+import { getRecaptchaToken, loadRecaptchaScript } from "@/lib/recaptcha";
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [recaptchaError, setRecaptchaError] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   // Cargar reCAPTCHA v3 al montar (PRIV-002)
   useEffect(() => {
@@ -17,38 +17,41 @@ export default function ContactForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setRecaptchaError(null);
+    setSubmitError(null);
 
     const formData = new FormData(e.currentTarget);
-    
-    // Honeypot check - si el campo website está lleno, es spam
-    if (formData.get("website")) {
-      return;
-    }
 
-    // reCAPTCHA v3 - Obtener token (PRIV-002)
+    // reCAPTCHA v3 - Obtener token (la verificación ocurre en el servidor)
     const recaptchaToken = await getRecaptchaToken(RECAPTCHA_CONFIG.actions.contactB2C);
-    
-    if (!recaptchaToken) {
-      setRecaptchaError("Error de verificación de seguridad. Por favor, intenta de nuevo.");
-      setIsSubmitting(false);
-      return;
-    }
 
-    // Verificar token con backend
-    const verification = await verifyRecaptchaToken(recaptchaToken);
-    
-    if (!verification.success) {
-      setRecaptchaError("No se pudo verificar el envío. Por favor, intenta de nuevo.");
-      setIsSubmitting(false);
-      return;
-    }
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "b2c",
+          nombre: formData.get("nombre"),
+          email: formData.get("email"),
+          telefono: formData.get("telefono"),
+          website: formData.get("website"), // honeypot, validado en el servidor
+          recaptchaToken,
+        }),
+      });
 
-    // Simular envío (aquí se integraría con el servicio de email)
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+      const result = await response.json().catch(() => ({ ok: false }));
+
+      if (!response.ok || !result.ok) {
+        throw new Error("send-failed");
+      }
+
+      setIsSubmitted(true);
+    } catch {
+      setSubmitError(
+        "No pudimos enviar tu mensaje. Escríbenos por WhatsApp e intentamos por ahí."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {
@@ -123,10 +126,20 @@ export default function ContactForm() {
         />
       </div>
 
-      {/* Error de reCAPTCHA */}
-      {recaptchaError && (
+      {/* Error de envío */}
+      {submitError && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-xl">
-          <p className="text-sm text-red-600">{recaptchaError}</p>
+          <p className="text-sm text-red-600">
+            {submitError}{" "}
+            <a
+              href={WHATSAPP_CONFIG.getLinkWithText("default")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium underline hover:text-red-700"
+            >
+              Abrir WhatsApp
+            </a>
+          </p>
         </div>
       )}
 

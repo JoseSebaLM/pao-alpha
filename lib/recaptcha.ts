@@ -16,25 +16,52 @@ declare global {
 }
 
 /**
- * Verifica el token de reCAPTCHA v3 con el backend
+ * Verifica un token de reCAPTCHA v3 en el SERVIDOR contra la API de Google.
+ *
+ * Se ejecuta dentro del POST del formulario (`/api/contact`), no en un
+ * endpoint aparte: el cliente ya NO llama a `/api/verify-recaptcha` por su
+ * cuenta (un solo POST con el token incluido).
+ *
+ * Si `RECAPTCHA_SECRET_KEY` no está configurada (o quedó con el placeholder
+ * por defecto), la verificación se OMITE con una advertencia para no bloquear
+ * el desarrollo local. En producción, con la clave real, la validación es
+ * estricta (score mínimo).
  */
-export async function verifyRecaptchaToken(token: string): Promise<{ success: boolean; score: number }> {
+const RECAPTCHA_SECRET_PLACEHOLDER = "your_recaptcha_secret_key_here";
+
+export async function verifyRecaptchaServer(
+  token: string
+): Promise<{ success: boolean; score: number; skipped?: boolean }> {
+  const secret = RECAPTCHA_CONFIG.secretKey;
+
+  if (!secret || secret === RECAPTCHA_SECRET_PLACEHOLDER) {
+    console.warn(
+      "[reCAPTCHA] RECAPTCHA_SECRET_KEY no configurada; se omite la verificación (solo apto para desarrollo)."
+    );
+    return { success: true, score: 0, skipped: true };
+  }
+
+  if (!token) {
+    return { success: false, score: 0 };
+  }
+
   try {
-    const response = await fetch("/api/verify-recaptcha", {
+    const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token }),
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ secret, response: token }),
     });
 
-    if (!response.ok) {
-      throw new Error("Verification failed");
-    }
+    const data: { success: boolean; score?: number } = await response.json();
+    const score = data.score ?? 0;
 
-    return await response.json();
+    return {
+      success: data.success === true && score >= RECAPTCHA_CONFIG.minScore,
+      score,
+    };
   } catch (error) {
-    console.error("reCAPTCHA verification error:", error);
-    // En caso de error, permitir el envío pero loggear
-    return { success: true, score: 0.5 };
+    console.error("[reCAPTCHA] Error verificando el token:", error);
+    return { success: false, score: 0 };
   }
 }
 
